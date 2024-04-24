@@ -1,31 +1,42 @@
-import { AxiosResponse } from 'axios';
 import RepositoryManager from "../../../Infrastructure/RepositoryManager";
-import PageDto from "../Dto/PageDto";
-import MenuItemDto from "../Dto/MenuItemDto";
+import IPage from "../Dto/IPage";
+import IMenuItem from "../Dto/IMenuItem";
 import Collection from "../../../Infrastructure/Shared/Interface/Collection";
 
 export default class PageRepository extends RepositoryManager {
-    public getPages(): Promise<AxiosResponse<PageDto[]>> {
-        return this.get<PageDto[]>('/api/pages');
+    public async getPages(): Promise<IPage[]> {
+        return await this.get<IPage[]>('/api/pages').then(res  => {
+            return res.data
+        });
     }
 
-    public getPageById(id: string | number): Promise<AxiosResponse<PageDto>> {
-        return this.get<PageDto>(`/api/page/${id}`);
+    public async getPageById(id: string | null | undefined): Promise<IPage> {
+        return await this.get<IPage>(`/api/page/${id}`).then(res  => {
+            return res.data
+        });
     }
 
-    public getPageMenuItems(): Promise<AxiosResponse<MenuItemDto[]>> {
-        return this.get<MenuItemDto[]>('/api/page/menu-items');
+    public async getPageMenuItems(): Promise<IMenuItem[]> {
+        return await this.get<IMenuItem[]>('/api/page/menu-items').then(res  => {
+            return res.data
+        });
     }
 
-    public getPageGalleries(id: string | number): Promise<AxiosResponse<Collection<any>>> {
-        return this.get<Collection<any>>(`/api/page/${id}/galleries`);
+    public async getPageGalleries(id: string | number): Promise<Collection<any>> {
+        return await this.get<Collection<any>>(`/api/page/${id}/galleries`).then(res  => {
+            return res.data
+        });
     }
 
-    public getPageProjects(id: string | number): Promise<AxiosResponse<Collection<any>>> {
-        return this.get<Collection<any>>(`/api/page/${id}/projects`);
+    public async getPageProjects(id: string | number): Promise<Collection<any>> {
+        return await this.get<Collection<any>>(`/api/page/${id}/projects`).then(res  => {
+            return res.data
+        });
     }
 
-    public postContact<U>(data: U): Promise<AxiosResponse<any>> {
-        return this.post<any, U>('/api/page/contact', data);
+    public postContact<U>(data: U): Promise<any> {
+        return this.post<any, U>('/api/page/contact', data).then(res  => {
+            return res.data
+        });
     }
 }

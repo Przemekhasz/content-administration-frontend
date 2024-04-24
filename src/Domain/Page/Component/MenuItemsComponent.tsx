@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
-import { AxiosResponse } from 'axios';
-import MenuItemDto from "../Dto/MenuItemDto";
-import PageRepository from "../Repository/PageRepository";
+import IMenuItem from "../Dto/IMenuItem";
 import {
     AppBar,
     Box,
     Button,
-    Container, createTheme,
+    Container,
+    createTheme,
     styled,
     ThemeProvider,
     Toolbar,
     Typography
 } from "@mui/material";
-import LoadingScreen from "../../../Infrastructure/Shared/components/LoadingScreen";
+import { Link as RouterLink } from 'react-router-dom';
+import PageDomain from "../PageDomain";
 
-
-const StyledButton = styled(Button)(({ theme }) => ({
+const StyledLink = styled(RouterLink)(({ theme }) => ({
     margin: theme.spacing(1),
+    textDecoration: 'none',
+    color: 'inherit',
+    fontSize: '1rem',
+    fontFamily: theme.typography.fontFamily,
+    textTransform: 'uppercase',
+    padding: theme.spacing(1, 2),
+    borderRadius: theme.shape.borderRadius,
     '&:hover': {
         textDecoration: 'underline',
+        backgroundColor: theme.palette.action.hover,
     },
 }));
 
@@ -36,84 +43,55 @@ const theme = createTheme({
 });
 
 interface MenuItemsComponentState {
-    menuItems: MenuItemDto[];
+    menuItems: IMenuItem[];
     isLoading: boolean;
-    error?: Error;
 }
 
 export default class MenuItemsComponent extends Component<{}, MenuItemsComponentState> {
-    private pageRepository: PageRepository;
+    private pageDomain: PageDomain;
 
     constructor(props: {}) {
         super(props);
         this.state = {
             menuItems: [],
             isLoading: false,
-            error: undefined
         };
-        this.pageRepository = new PageRepository();
+        this.pageDomain = new PageDomain();
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.fetchMenuItems();
     }
 
-    componentWillUnmount() {
-    }
-
-    // todo impl this
-    // public handleScroll(): void {
-    //     const scrollTop: number = window.scrollY;
-    //     this.setState({ scrolled: scrollTop > 100 });
-    // }
-
-    fetchMenuItems = async () => {
+    private async fetchMenuItems(): Promise<void> {
         this.setState({ isLoading: true });
-        try {
-            const response: AxiosResponse<MenuItemDto[]> = await this.pageRepository.getPageMenuItems();
-            this.setState({ menuItems: response.data, isLoading: false });
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                this.setState({ menuItems: [], error: error, isLoading: false });
-            } else {
-                this.setState({ menuItems: [], error: new Error('An unexpected error occurred'), isLoading: false });
-            }
-        }
+
+        const response: IMenuItem[] = await this.pageDomain.getPageMenuItems();
+
+        this.setState({ menuItems: response, isLoading: false });
     };
 
-
-
     render() {
-        const { menuItems, isLoading, error } = this.state;
-
-        if (isLoading) {
-            return <LoadingScreen />;
-        }
-
-        if (error) {
-            return <Typography color="error">Error: {error.message}</Typography>;
-        }
+        const { menuItems, isLoading } = this.state;
 
         return (
-            <>
-            {/*{this.state.scrolled ? (*/}
-
-                <AppBar position="sticky" sx={{ bgcolor: 'transparent', boxShadow: 'none', color: '#fff', mt: -35 }}>
-                    <Container>
-                        <Toolbar disableGutters>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                                <ThemeProvider theme={theme}>
-                                </ThemeProvider>
+            <AppBar position="sticky" sx={{ bgcolor: 'transparent', boxShadow: 'none', color: '#fff', mt: -35 }}>
+                <Container>
+                    <Toolbar disableGutters>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <ThemeProvider theme={theme}>
                                 <Box sx={{ display: 'flex' }}>
                                     {menuItems.map((item) => (
-                                        <StyledButton key={item.id} color="inherit">{item.name}</StyledButton>
+                                        <StyledLink to={item.url || '#'} key={item.id}>
+                                            {item.name}
+                                        </StyledLink>
                                     ))}
                                 </Box>
-                            </Box>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
-            </>
+                            </ThemeProvider>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
         );
     }
 }
