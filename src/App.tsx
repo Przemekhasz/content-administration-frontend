@@ -1,11 +1,12 @@
 import React, { Component, Suspense, lazy } from 'react';
-import {Routes, Route, Navigate, Link} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import LoadingScreen from "./Infrastructure/Shared/components/LoadingScreen";
 import IPage from "./Domain/Page/Dto/IPage";
-import MenuItemsComponent from "./Domain/Page/Component/MenuItemsComponent";
 import PageDomain from "./Domain/Page/PageDomain";
-import {ArrowBack} from "@mui/icons-material";
 import { PageNotFound } from './Infrastructure/Shared/components/PageNotFound';
+import { ProjectDetail } from './Domain/Page/Component/ProjectDetail';
+import "./App.css";
+import {GalleryImages} from "./Domain/Page/Component/GalleryImages";
 
 const PageViewer = lazy(() => import("./Domain/Page/Component/PageViewer"));
 
@@ -44,19 +45,23 @@ export default class App extends Component<{}, PageViewerState> {
     };
 
     render() {
-        const { isLoading, error } = this.state;
+        const { isLoading } = this.state;
 
         if (isLoading) return <LoadingScreen />;
-        if (error) return <div>Error: {error.message}</div>;
 
         return (
             <>
-                <MenuItemsComponent />
                 <Suspense fallback={<LoadingScreen />}>
                     <Routes>
                         {this.pages?.map(page => (
-                            <Route path={page.menuItem?.url || ''} element={<PageViewer page={page} key={page.id} />} />
+                            <Route
+                                key={page.id}
+                                path={page.menuItem?.url || ''}
+                                element={<PageViewer page={page} key={page.id} />}
+                            />
                         ))}
+                        <Route path='/project/:projectId' element={<ProjectDetail />} />
+                        <Route path='/gallery/:galleryId' element={<GalleryImages />} />
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </Suspense>

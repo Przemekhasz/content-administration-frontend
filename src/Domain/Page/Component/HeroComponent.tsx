@@ -3,7 +3,7 @@ import { Box, IconButton } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import IPage from "../Dto/IPage";
 import {apiUrl} from "../../../env";
-import MenuItemsComponent from "./MenuItemsComponent";
+import MenuItemsComponent from "../../../Infrastructure/Shared/components/MenuItemsComponent";
 
 interface HeroComponentProps {
     page: IPage;
