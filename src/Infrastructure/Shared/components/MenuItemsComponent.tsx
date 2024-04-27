@@ -81,21 +81,15 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
                 <StylesContext.Consumer>
                     {styles => {
                         if (!styles) {
-                            return "";
+                            return null;
                         }
-
-                        const {
-                            appBarBackground,
-                            fontFamily
-                        } = styles;
-
                         return (
                             <AppBar position="sticky" sx={{
-                                bgcolor: appBarBackground,
+                                bgcolor: styles.backgroundColor,
                                 boxShadow: 'none',
                                 color: '#fff',
                                 mt: -35,
-                                fontFamily: fontFamily
+                                fontFamily: styles.headingFont
                             }}>
                                 <Container>
                                     <Toolbar disableGutters>

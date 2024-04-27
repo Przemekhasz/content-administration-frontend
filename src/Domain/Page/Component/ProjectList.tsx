@@ -55,9 +55,8 @@ export default class ProjectList extends Component<ProjectProps> {
                     <StylesContext.Consumer>
                         {styles => {
                             if (!styles) {
-                                return "";
+                                return null;
                             }
-
                             return (
                                 <ThemeProvider theme={theme}>
                                     <Container>
@@ -80,7 +79,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                                     alignItems: 'center',
                                                                     justifyContent: 'space-between',
                                                                     flexDirection: index % 2 === 0 ? 'row-reverse' : 'row',
-                                                                    fontFamily: styles.fontFamily
+                                                                    fontFamily: styles.headingFont
                                                                 }}>
                                                                     <div style={{ flex: 1, paddingRight: '20px' }}>
                                                                         <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
@@ -97,7 +96,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                                                           style={{
                                                                                               marginRight: '5px',
                                                                                               marginBottom: '5px',
-                                                                                              backgroundColor: styles.categoryColor,
+                                                                                              backgroundColor: styles.categoriesColor,
                                                                                               color: '#ffffff'
                                                                                           }} />
                                                                                 ))}
@@ -108,7 +107,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                                                     <Chip key={tagIndex} label={tag.name} style={{
                                                                                         marginRight: '5px',
                                                                                         marginBottom: '5px',
-                                                                                        backgroundColor: styles.tagColor,
+                                                                                        backgroundColor: styles.tagsColor,
                                                                                         color: '#ffffff'
                                                                                     }} />
                                                                                 ))}

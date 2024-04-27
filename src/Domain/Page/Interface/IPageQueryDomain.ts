@@ -3,6 +3,7 @@ import IMenuItem from "../Dto/IMenuItem";
 import IProject from "../Dto/IProject";
 import IGallery from "../Dto/IGallery";
 import IStyles from "../Dto/IStyles";
+import {IGlobalStyles} from "../Dto/IGlobalStyles";
 
 export default interface IPageQueryDomain {
     findPages(): Promise<IPage[]>;
@@ -13,4 +14,5 @@ export default interface IPageQueryDomain {
     getPageGalleries(id: string | null | undefined): Promise<IGallery[]>;
     getGalleryById(id: string | null | undefined): Promise<IGallery>;
     getPageStyles(id: string | null | undefined): Promise<IStyles>;
+    getGlobalStyles(): Promise<IGlobalStyles>;
 }
