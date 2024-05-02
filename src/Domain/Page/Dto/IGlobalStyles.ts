@@ -1,4 +1,4 @@
-export default interface IStyles {
+export interface IGlobalStyles {
     id: string;
     name: string;
     primaryColor: string;

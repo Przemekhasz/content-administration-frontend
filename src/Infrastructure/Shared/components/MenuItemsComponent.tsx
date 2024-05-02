@@ -11,8 +11,11 @@ import {
 } from "@mui/material";
 import { Link as RouterLink } from 'react-router-dom';
 import PageDomain from "../../../Domain/Page/PageDomain";
-import {StylesContext, StylesProvider} from '../Providers/StylesProvider';
+import { StylesContext, StylesProvider } from '../Providers/StylesProvider';
 import LoadingScreen from "./LoadingScreen";
+import IStyles from "../../../Domain/Page/Dto/IStyles";
+import { IGlobalStyles } from "../../../Domain/Page/Dto/IGlobalStyles";
+import { getDefaultStyles } from "../DefaultStyles";
 
 const StyledLink = styled(RouterLink)(({ theme }) => ({
     margin: theme.spacing(1),
@@ -73,49 +76,42 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
     render() {
         const { menuItems } = this.state;
 
-
         if (this.state.isLoading) return <LoadingScreen />;
+
         return (
             <>
                 <StylesProvider>
-                <StylesContext.Consumer>
-                    {styles => {
-                        if (!styles) {
-                            return "";
-                        }
+                    <StylesContext.Consumer>
+                        {styles => {
+                            let stylesObj = styles as IGlobalStyles | IStyles;
 
-                        const {
-                            appBarBackground,
-                            fontFamily
-                        } = styles;
-
-                        return (
-                            <AppBar position="sticky" sx={{
-                                bgcolor: appBarBackground,
-                                boxShadow: 'none',
-                                color: '#fff',
-                                mt: -35,
-                                fontFamily: fontFamily
-                            }}>
-                                <Container>
-                                    <Toolbar disableGutters>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                                            <ThemeProvider theme={theme}>
-                                                <Box sx={{ display: 'flex' }}>
-                                                    {menuItems.map((item) => (
-                                                        <StyledLink to={item.url || '#'} key={item.id}>
-                                                            {item.name}
-                                                        </StyledLink>
-                                                    ))}
-                                                </Box>
-                                            </ThemeProvider>
-                                        </Box>
-                                    </Toolbar>
-                                </Container>
-                            </AppBar>
-                        );
-                    }}
-                </StylesContext.Consumer>
+                            return (
+                                <AppBar position="sticky" sx={{
+                                    bgcolor: stylesObj?.backgroundColor,
+                                    boxShadow: 'none',
+                                    color: '#fff',
+                                    mt: -35,
+                                    fontFamily: stylesObj?.headingFont
+                                }}>
+                                    <Container>
+                                        <Toolbar disableGutters>
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                                                <ThemeProvider theme={theme}>
+                                                    <Box sx={{ display: 'flex' }}>
+                                                        {menuItems.map((item) => (
+                                                            <StyledLink to={item.url || '#'} key={item.id}>
+                                                                {item.name}
+                                                            </StyledLink>
+                                                        ))}
+                                                    </Box>
+                                                </ThemeProvider>
+                                            </Box>
+                                        </Toolbar>
+                                    </Container>
+                                </AppBar>
+                            );
+                        }}
+                    </StylesContext.Consumer>
                 </StylesProvider>
             </>
         );

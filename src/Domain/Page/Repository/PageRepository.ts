@@ -5,6 +5,7 @@ import Collection from "../../../Infrastructure/Shared/Interface/Collection";
 import IProject from "../Dto/IProject";
 import IGallery from "../Dto/IGallery";
 import IStyles from "../Dto/IStyles";
+import {IGlobalStyles} from "../Dto/IGlobalStyles";
 
 export default class PageRepository extends RepositoryManager {
     public async getPages(): Promise<IPage[]> {
@@ -20,7 +21,7 @@ export default class PageRepository extends RepositoryManager {
     }
 
     public async getPageMenuItems(): Promise<IMenuItem[]> {
-        return await this.get<IMenuItem[]>('/api/page/menu-items').then(res  => {
+        return await this.get<IMenuItem[]>('/api/menu-items').then(res  => {
             return res.data
         });
     }
@@ -51,6 +52,12 @@ export default class PageRepository extends RepositoryManager {
 
     public async getPageStyles(id: string | null | undefined): Promise<IStyles> {
         return await this.get<IStyles>(`/api/page/${id}/styles`).then(res  => {
+            return res.data
+        });
+    }
+
+    public async getGlobalStyles(): Promise<IGlobalStyles> {
+        return await this.get<IGlobalStyles>(`/api/global-styles`).then(res  => {
             return res.data
         });
     }

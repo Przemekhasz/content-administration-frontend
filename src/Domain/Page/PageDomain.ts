@@ -5,6 +5,7 @@ import IMenuItem from "./Dto/IMenuItem";
 import IProject from "./Dto/IProject";
 import IGallery from "./Dto/IGallery";
 import IStyles from "./Dto/IStyles";
+import {IGlobalStyles} from "./Dto/IGlobalStyles";
 
 export default class PageDomain implements IPageQueryDomain {
     private readonly pageQueryService: PageService;
@@ -43,5 +44,9 @@ export default class PageDomain implements IPageQueryDomain {
 
     public async getPageStyles(id: string | null | undefined): Promise<IStyles> {
         return await this.pageQueryService.getPageStyles(id);
+    }
+
+    public async getGlobalStyles(): Promise<IGlobalStyles> {
+        return await this.pageQueryService.getGlobalStyles();
     }
 }
