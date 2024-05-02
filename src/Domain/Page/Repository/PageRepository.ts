@@ -21,7 +21,7 @@ export default class PageRepository extends RepositoryManager {
     }
 
     public async getPageMenuItems(): Promise<IMenuItem[]> {
-        return await this.get<IMenuItem[]>('/api/page/menu-items').then(res  => {
+        return await this.get<IMenuItem[]>('/api/menu-items').then(res  => {
             return res.data
         });
     }
