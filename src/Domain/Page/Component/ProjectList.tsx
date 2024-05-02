@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Grid, Paper, Typography, Chip, Container } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom'; // Dodane importy
+import { Link } from 'react-router-dom';
 import PageDomain from "../PageDomain";
 import IProject from "../Dto/IProject";
 import IPage from "../Dto/IPage";
 import { apiUrl } from "../../../env";
 import {StylesContext, StylesProvider} from "../../../Infrastructure/Shared/Providers/StylesProvider";
+import {IGlobalStyles} from "../Dto/IGlobalStyles";
+import IStyles from "../Dto/IStyles";
+import {getDefaultStyles} from "../../../Infrastructure/Shared/DefaultStyles";
 
 const theme = createTheme({
     typography: {
@@ -54,9 +57,9 @@ export default class ProjectList extends Component<ProjectProps> {
                 <StylesProvider>
                     <StylesContext.Consumer>
                         {styles => {
-                            if (!styles) {
-                                return null;
-                            }
+                            const stylesObj = styles as IStyles | IGlobalStyles;
+                            const defaultStyles = getDefaultStyles(stylesObj);
+
                             return (
                                 <ThemeProvider theme={theme}>
                                     <Container>
@@ -79,14 +82,19 @@ export default class ProjectList extends Component<ProjectProps> {
                                                                     alignItems: 'center',
                                                                     justifyContent: 'space-between',
                                                                     flexDirection: index % 2 === 0 ? 'row-reverse' : 'row',
-                                                                    fontFamily: styles.headingFont
+                                                                    fontFamily: stylesObj?.headingFont
                                                                 }}>
                                                                     <div style={{ flex: 1, paddingRight: '20px' }}>
                                                                         <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
                                                                             {project.title}
                                                                         </Typography>
                                                                         <Typography variant="body1" gutterBottom sx={{ mb: 2 }}>
-                                                                            {project.mainDescription}
+                                                                            {project.mainDescription && (
+                                                                                <>
+                                                                                    <div dangerouslySetInnerHTML={{ __html: project.mainDescription }} />
+                                                                                    {project.mainDescription}
+                                                                                </>
+                                                                            )}
                                                                         </Typography>
                                                                         <div>
                                                                             <Typography variant="body1" sx={{ fontWeight: 600 }}>Kategorie:</Typography>
@@ -96,7 +104,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                                                           style={{
                                                                                               marginRight: '5px',
                                                                                               marginBottom: '5px',
-                                                                                              backgroundColor: styles.categoriesColor,
+                                                                                              backgroundColor: stylesObj?.categoriesColor,
                                                                                               color: '#ffffff'
                                                                                           }} />
                                                                                 ))}
@@ -107,7 +115,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                                                     <Chip key={tagIndex} label={tag.name} style={{
                                                                                         marginRight: '5px',
                                                                                         marginBottom: '5px',
-                                                                                        backgroundColor: styles.tagsColor,
+                                                                                        backgroundColor: stylesObj?.tagsColor,
                                                                                         color: '#ffffff'
                                                                                     }} />
                                                                                 ))}

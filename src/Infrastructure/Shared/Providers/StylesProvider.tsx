@@ -2,16 +2,16 @@ import React, { createContext, ReactNode, Component } from 'react';
 import IStyles from "../../../Domain/Page/Dto/IStyles";
 import PageDomain from "../../../Domain/Page/PageDomain";
 import LoadingScreen from "../components/LoadingScreen";
-import {IGlobalStyles} from "../../../Domain/Page/Dto/IGlobalStyles";
+import { IGlobalStyles } from "../../../Domain/Page/Dto/IGlobalStyles";
 
-export const StylesContext = createContext<IStyles | IGlobalStyles | undefined>(undefined);
+export const StylesContext = createContext<IGlobalStyles | IStyles | {}>({});
 
 interface StylesProviderProps {
-    children: ReactNode,
+    children: ReactNode;
 }
 
-interface StylesProviderState{
-    styles: IStyles | IGlobalStyles,
+interface StylesProviderState {
+    styles: IGlobalStyles | IStyles | {};
     isLoading: boolean;
 }
 
@@ -22,9 +22,9 @@ export class StylesProvider extends Component<StylesProviderProps, StylesProvide
     constructor(props: StylesProviderProps) {
         super(props);
         this.state = {
-            styles: {} as IStyles | IGlobalStyles,
-            isLoading: false,
-        }
+            styles: {},
+            isLoading: true,
+        };
         this.pageDomain = new PageDomain();
     }
 
@@ -35,38 +35,33 @@ export class StylesProvider extends Component<StylesProviderProps, StylesProvide
 
     private async fetchStyles(pageId: string | null | undefined): Promise<void> {
         try {
-            this.setState({ isLoading: true })
             const styles = await this.pageDomain.getPageStyles(pageId);
-            this.setState({ styles: styles, isLoading: false })
+            this.setState({ styles: styles });
         } catch (error) {
             console.log(error);
+        } finally {
+            this.setState({ isLoading: false });
         }
     };
 
     private async fetchGlobalStyles(): Promise<void> {
         try {
-            this.setState({ isLoading: true })
-
             const globalStyles = await this.pageDomain.getGlobalStyles();
-
-            this.setState({ styles: globalStyles, isLoading: false })
+            this.setState({ styles: globalStyles });
         } catch (error) {
             console.log(error);
+        } finally {
+            this.setState({ isLoading: false });
         }
     };
 
-    private stylesObj: IStyles | IGlobalStyles = {
-        ...this.state.styles,
-    };
-
     render() {
-        if (this.state.isLoading) return <LoadingScreen />
+        if (this.state.isLoading) return <LoadingScreen />;
+
         return (
-            <>
-                <StylesContext.Provider value={this.stylesObj}>
-                    {this.props.children}
-                </StylesContext.Provider>
-            </>
+            <StylesContext.Provider value={this.state.styles}>
+                {this.props.children}
+            </StylesContext.Provider>
         );
     }
 }
