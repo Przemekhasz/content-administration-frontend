@@ -6,6 +6,7 @@ import ProjectList from "./ProjectList";
 import GalleryList from "./GalleryList";
 import MenuItemsComponent from "../../../Infrastructure/Shared/components/MenuItemsComponent";
 import Footer from "../../../Infrastructure/Shared/components/Footer";
+import {BodyTextComponent} from "./BodyTextComponent";
 
 interface PageViewerProps {
     page: IPage;
@@ -27,6 +28,7 @@ export default class PageViewer extends Component<PageViewerProps> {
             <Box>
                 <MenuItemsComponent />
                 <HeroComponent page={page} />
+                <BodyTextComponent page={page} />
                 <ProjectList page={page} />
                 <GalleryList page={page} />
                 <Footer />

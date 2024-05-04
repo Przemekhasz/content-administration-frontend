@@ -6,6 +6,8 @@ import IProject from "./Dto/IProject";
 import IGallery from "./Dto/IGallery";
 import IStyles from "./Dto/IStyles";
 import {IGlobalStyles} from "./Dto/IGlobalStyles";
+import IBodyText from "./Dto/IBodyText";
+import IFooter from "./Dto/IFooter";
 
 export default class PageDomain implements IPageQueryDomain {
     private readonly pageQueryService: PageService;
@@ -22,8 +24,16 @@ export default class PageDomain implements IPageQueryDomain {
         return await this.pageQueryService.getPageById(id)
     }
 
+    async getFooter(): Promise<IFooter> {
+        return await this.pageQueryService.getFooter();
+    }
+
     async getPageMenuItems(): Promise<IMenuItem[]> {
         return await this.pageQueryService.getPageMenuItems();
+    }
+
+    async getPageBodyTexts(id: string | null | undefined): Promise<IBodyText[]> {
+        return await this.pageQueryService.getPageBodyTexts(id);
     }
 
     async getPageProjects(id: string | null | undefined): Promise<IMenuItem[]> {
