@@ -37,7 +37,7 @@ export default class HeroComponent extends Component<HeroComponentProps> {
                 }
             }}
             >
-                <h1>{this.props.page.pageName}</h1>
+                <h1>Przemysław Tarapacki</h1>
                 <IconButton
                     onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
                     sx={{

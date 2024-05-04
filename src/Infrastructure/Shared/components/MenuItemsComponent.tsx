@@ -80,18 +80,18 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
 
         return (
             <>
-                <StylesProvider>
-                    <StylesContext.Consumer>
-                        {styles => {
-                            let stylesObj = styles as IGlobalStyles | IStyles;
+                {/*<StylesProvider>*/}
+                {/*    <StylesContext.Consumer>*/}
+                {/*        {styles => {*/}
+                {/*            let stylesObj = styles as IGlobalStyles | IStyles;*/}
 
                             return (
                                 <AppBar position="sticky" sx={{
-                                    bgcolor: stylesObj?.backgroundColor,
+                                    bgcolor: '#333',
                                     boxShadow: 'none',
                                     color: '#fff',
                                     mt: -35,
-                                    fontFamily: stylesObj?.headingFont
+                                    fontFamily: 'Robot'
                                 }}>
                                     <Container>
                                         <Toolbar disableGutters>
@@ -110,9 +110,9 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
                                     </Container>
                                 </AppBar>
                             );
-                        }}
-                    </StylesContext.Consumer>
-                </StylesProvider>
+                        {/*}}*/}
+                {/*    </StylesContext.Consumer>*/}
+                {/*</StylesProvider>*/}
             </>
         );
     }

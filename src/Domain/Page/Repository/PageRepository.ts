@@ -6,6 +6,8 @@ import IProject from "../Dto/IProject";
 import IGallery from "../Dto/IGallery";
 import IStyles from "../Dto/IStyles";
 import {IGlobalStyles} from "../Dto/IGlobalStyles";
+import IBodyText from "../Dto/IBodyText";
+import IFooter from "../Dto/IFooter";
 
 export default class PageRepository extends RepositoryManager {
     public async getPages(): Promise<IPage[]> {
@@ -20,6 +22,12 @@ export default class PageRepository extends RepositoryManager {
         });
     }
 
+    public async getFooter(): Promise<IFooter> {
+        return await this.get<IFooter>(`/api/footer`).then(res  => {
+            return res.data
+        });
+    }
+
     public async getPageMenuItems(): Promise<IMenuItem[]> {
         return await this.get<IMenuItem[]>('/api/menu-items').then(res  => {
             return res.data
@@ -28,6 +36,12 @@ export default class PageRepository extends RepositoryManager {
 
     public async getPageGalleries(id: string | null | undefined): Promise<IGallery[]> {
         return await this.get<IGallery[]>(`/api/page/${id}/galleries`).then(res  => {
+            return res.data
+        });
+    }
+
+    public async getPageBodyTexts(id: string | null | undefined): Promise<IBodyText[]> {
+        return await this.get<IBodyText[]>(`/api/page/${id}/body-texts`).then(res  => {
             return res.data
         });
     }

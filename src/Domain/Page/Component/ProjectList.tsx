@@ -6,10 +6,30 @@ import PageDomain from "../PageDomain";
 import IProject from "../Dto/IProject";
 import IPage from "../Dto/IPage";
 import { apiUrl } from "../../../env";
-import {StylesContext, StylesProvider} from "../../../Infrastructure/Shared/Providers/StylesProvider";
-import {IGlobalStyles} from "../Dto/IGlobalStyles";
-import IStyles from "../Dto/IStyles";
-import {getDefaultStyles} from "../../../Infrastructure/Shared/DefaultStyles";
+import DOMPurify from "dompurify";
+
+const statusStyles = {
+    inProgress: {
+        bgcolor: 'primary.main', // Blue background for "In Progress"
+        color: 'common.white',
+        fontWeight: 'bold',
+        borderRadius: '4px',
+        padding: '4px 8px',
+        display: 'inline-block',
+        border: '2px solid lightblue',
+        borderColor: 'primary.dark'
+    },
+    completed: {
+        bgcolor: 'success.main',
+        color: 'common.white',
+        fontWeight: 'bold',
+        borderRadius: '4px',
+        padding: '4px 8px',
+        display: 'inline-block',
+        border: '2px solid lightgreen',
+        borderColor: 'success.dark'
+    }
+};
 
 const theme = createTheme({
     typography: {
@@ -53,94 +73,82 @@ export default class ProjectList extends Component<ProjectProps> {
         const { projects } = this;
 
         return (
-            <>
-                <StylesProvider>
-                    <StylesContext.Consumer>
-                        {styles => {
-                            const stylesObj = styles as IStyles | IGlobalStyles;
-                            const defaultStyles = getDefaultStyles(stylesObj);
-
-                            return (
-                                <ThemeProvider theme={theme}>
-                                    <Container>
-                                        {projects && projects.length > 0 && (
-                                            <>
-                                                <Typography variant="h4" align="center" gutterBottom style={{ marginTop: '50px' }}>Projekty</Typography>
-                                                <Grid container spacing={3}>
-                                                    {projects.map((project, index) => (
-                                                        <Grid item xs={12} key={index}>
-                                                            <Link to={`/project/${project.id}`} style={{ textDecoration: 'none' }}> {/* Dodany Link */}
-                                                                <Paper sx={{
-                                                                    padding: '20px',
-                                                                    borderRadius: '10px',
-                                                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                                                                    '&:hover': {
-                                                                        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                                                                    },
-                                                                    backgroundColor: index % 2 === 0 ? '#f5f5f5' : '#ffffff',
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    justifyContent: 'space-between',
-                                                                    flexDirection: index % 2 === 0 ? 'row-reverse' : 'row',
-                                                                    fontFamily: stylesObj?.headingFont
-                                                                }}>
-                                                                    <div style={{ flex: 1, paddingRight: '20px' }}>
-                                                                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-                                                                            {project.title}
-                                                                        </Typography>
-                                                                        <Typography variant="body1" gutterBottom sx={{ mb: 2 }}>
-                                                                            {project.mainDescription && (
-                                                                                <>
-                                                                                    <div dangerouslySetInnerHTML={{ __html: project.mainDescription }} />
-                                                                                    {project.mainDescription}
-                                                                                </>
-                                                                            )}
-                                                                        </Typography>
-                                                                        <div>
-                                                                            <Typography variant="body1" sx={{ fontWeight: 600 }}>Kategorie:</Typography>
-                                                                            <div style={{ marginBottom: '10px' }}>
-                                                                                {project.categories?.map((category, catIndex) => (
-                                                                                    <Chip key={catIndex} label={category.name}
-                                                                                          style={{
-                                                                                              marginRight: '5px',
-                                                                                              marginBottom: '5px',
-                                                                                              backgroundColor: stylesObj?.categoriesColor,
-                                                                                              color: '#ffffff'
-                                                                                          }} />
-                                                                                ))}
-                                                                            </div>
-                                                                            <Typography variant="body1" sx={{ fontWeight: 600 }}>Tagi:</Typography>
-                                                                            <div>
-                                                                                {project.tags?.map((tag, tagIndex) => (
-                                                                                    <Chip key={tagIndex} label={tag.name} style={{
-                                                                                        marginRight: '5px',
-                                                                                        marginBottom: '5px',
-                                                                                        backgroundColor: stylesObj?.tagsColor,
-                                                                                        color: '#ffffff'
-                                                                                    }} />
-                                                                                ))}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div style={{ flex: 1 }}>
-                                                                        <img src={apiUrl + '/uploads/img/' + project?.details?.[0]?.imagePath ?? ''}
-                                                                             alt={project?.title ?? ''}
-                                                                             style={{ width: '100%', maxWidth: '500px' }} />
-                                                                    </div>
-                                                                </Paper>
-                                                            </Link>
-                                                        </Grid>
-                                                    ))}
-                                                </Grid>
-                                            </>
-                                        )}
-                                    </Container>
-                                </ThemeProvider>
-                            );
-                        }}
-                    </StylesContext.Consumer>
-                </StylesProvider>
-            </>
+            <ThemeProvider theme={theme}>
+                <Container>
+                    {projects && projects.length > 0 && (
+                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                            Projekty
+                        </Typography>
+                    )}
+                    <Grid container spacing={3}>
+                        {projects?.map((project, index) => (
+                            <Grid item xs={12} key={index}>
+                                <Link to={`/project/${project.id}`} style={{textDecoration: 'none'}}>
+                                    <Paper sx={{
+                                        p: 2,
+                                        borderRadius: 1,
+                                        boxShadow: 1,
+                                        '&:hover': {
+                                            boxShadow: 2,
+                                        },
+                                        backgroundColor: index % 2 === 0 ? 'grey.200' : 'common.white',
+                                        // display: 'flex',
+                                        flexDirection: {xs: 'column', sm: index % 2 === 0 ? 'row-reverse' : 'row'},
+                                        alignItems: 'center',
+                                        gap: 2
+                                    }}>
+                                        <img
+                                            src={apiUrl + '/uploads/img/' + project.details?.[0]?.imagePath ?? ''}
+                                            alt={project.title ?? ''}
+                                            style={{width: '100%', height: 'auto'}}
+                                        />
+                                        <div>
+                                            <Typography variant="h5" gutterBottom>
+                                                {project.title}
+                                            </Typography>
+                                            <div
+                                                style={statusStyles.inProgress}>
+                                                {'inProgress'}
+                                            </div>
+                                            {project.mainDescription && (
+                                                <Typography variant="body1" gutterBottom>
+                                                    <Typography variant="body1"
+                                                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(project.mainDescription || '')}}/>
+                                                </Typography>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <Typography variant="body1" sx={{fontWeight: 600}}>Kategorie:</Typography>
+                                            <div style={{marginBottom: '10px'}}>
+                                                {project.categories?.map((category, catIndex) => (
+                                                    <Chip key={catIndex} label={category.name}
+                                                          style={{
+                                                              marginRight: '5px',
+                                                              marginBottom: '5px',
+                                                              backgroundColor: '#333',
+                                                              color: '#ffffff'
+                                                          }}/>
+                                                ))}
+                                            </div>
+                                            <Typography variant="body1" sx={{fontWeight: 600}}>Tagi:</Typography>
+                                            <div>
+                                                {project.tags?.map((tag, tagIndex) => (
+                                                    <Chip key={tagIndex} label={tag.name} style={{
+                                                        marginRight: '5px',
+                                                        marginBottom: '5px',
+                                                        backgroundColor: '#333',
+                                                        color: '#ffffff'
+                                                    }}/>
+                                                ))}
+                                            </div>
+                                        </div>n
+                                    </Paper>
+                                </Link>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Container>
+            </ThemeProvider>
         );
     }
 }
