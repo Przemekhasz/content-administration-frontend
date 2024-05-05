@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import IPage from "../Dto/IPage";
-import {apiUrl} from "../../../env";
-import MenuItemsComponent from "../../../Infrastructure/Shared/components/MenuItemsComponent";
+import { apiUrl } from "../../../env";
 
 interface HeroComponentProps {
     page: IPage;
@@ -12,6 +11,8 @@ interface HeroComponentProps {
 export default class HeroComponent extends Component<HeroComponentProps> {
     render() {
         const { page } = this.props;
+
+        const mainHeader = page.pageHeaders?.find(header => header.isMain);
 
         return (
             <Box sx={{
@@ -30,14 +31,14 @@ export default class HeroComponent extends Component<HeroComponentProps> {
                     right: 0,
                     bottom: 0,
                     left: 0,
-                    backgroundImage: `url(${page.banner?.image ? `${apiUrl}/${page.banner.image}` : ''})`,
+                    backgroundImage: `url(${page.banner?.image ? `${apiUrl}/${page.banner.image}` : 'defaultImagePath'})`,
                     backgroundAttachment: 'fixed',
                     backgroundSize: 'cover',
                     zIndex: -1,
                 }
             }}
             >
-                <h1>Przemysław Tarapacki</h1>
+                <h1>{mainHeader ? mainHeader.name : "No main header found"}</h1>
                 <IconButton
                     onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
                     sx={{
@@ -54,4 +55,3 @@ export default class HeroComponent extends Component<HeroComponentProps> {
         );
     }
 }
-

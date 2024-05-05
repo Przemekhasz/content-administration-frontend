@@ -2,6 +2,7 @@ import IBanner from "./IBanner";
 import ILogo from "./ILogo";
 import IMenuItem from "./IMenuItem";
 import Collection from "../../../Infrastructure/Shared/Interface/Collection";
+import IPageHeader from "./IPageHeader";
 
 export default interface IPage {
     id?: string | null;
@@ -11,7 +12,7 @@ export default interface IPage {
     banner?: IBanner | null;
     logo?: ILogo | null;
     menuItem?: IMenuItem | null;
-    pageHeaders?: Collection<any> | null;
+    pageHeaders: Array<IPageHeader> | null;
     socialMediaLinkIcons?: Collection<any> | null;
     galleries?: Collection<any> | null;
     projects?: Collection<any> | null;

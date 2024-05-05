@@ -141,7 +141,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                     }}/>
                                                 ))}
                                             </div>
-                                        </div>n
+                                        </div>
                                     </Paper>
                                 </Link>
                             </Grid>
