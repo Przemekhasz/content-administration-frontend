@@ -62,7 +62,7 @@ export default class App extends Component<{}, PageViewerState> {
                         ))}
                         <Route path='/project/:projectId' element={<ProjectDetail />} />
                         <Route path='/gallery/:galleryId' element={<GalleryImages />} />
-                        {/*<Route path="*" element={<PageNotFound />} />*/}
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </Suspense>
             </>
