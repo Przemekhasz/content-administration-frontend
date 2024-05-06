@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Box, Typography, Grid, IconButton } from '@mui/material';
-import { Facebook, Twitter, Instagram } from '@mui/icons-material';
+import {Facebook, Twitter, Instagram, LinkedIn, YouTube} from '@mui/icons-material';
 import IFooter from "../../../Domain/Page/Dto/IFooter";
 import PageDomain from "../../../Domain/Page/PageDomain";
 
@@ -45,14 +45,20 @@ class Footer extends Component<{}, FooterState> {
                 <Grid container spacing={2} justifyContent="center" alignItems="center">
                     <Grid item xs={12} md={4} textAlign="center">
                         <Typography variant="body1">{this.state.footer.followUs}</Typography>
-                        <IconButton color="inherit" component="a" href="https://facebook.com" aria-label="Facebook">
+                        <IconButton color="inherit" component="a" href="https://www.linkedin.com/in/przemys%C5%82aw-tarapacki-6b175a229/" aria-label="LinkedIn">
+                            <LinkedIn />
+                        </IconButton>
+                        <IconButton color="inherit" component="a" href="https://www.facebook.com/profile.php?id=100008155635759" aria-label="Facebook">
                             <Facebook />
                         </IconButton>
-                        <IconButton color="inherit" component="a" href="https://twitter.com" aria-label="Twitter">
+                        <IconButton color="inherit" component="a" href="https://twitter.com/Rumcajs60484194" aria-label="Twitter">
                             <Twitter />
                         </IconButton>
-                        <IconButton color="inherit" component="a" href="https://instagram.com" aria-label="Instagram">
+                        <IconButton color="inherit" component="a" href="https://www.instagram.com/przeeemek18" aria-label="Instagram">
                             <Instagram />
+                        </IconButton>
+                        <IconButton color="inherit" component="a" href="https://www.youtube.com/channel/UCnXEAHARicY9KgLFJv_hN6A" aria-label="YouTube">
+                            <YouTube />
                         </IconButton>
                     </Grid>
                     <Grid item xs={12} md={4} textAlign="center">
