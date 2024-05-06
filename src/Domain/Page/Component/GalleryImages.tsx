@@ -27,7 +27,7 @@ export const GalleryImages: React.FC = () => {
         };
 
         fetchGallery();
-    }, [galleryId]);
+    }, [galleryId, pageDomain]);
 
     const handleImageClick = (image: IImage) => {
         setSelectedImage(image);
@@ -139,23 +139,23 @@ export const GalleryImages: React.FC = () => {
                                 Kategorie:
                                 {selectedImage.categories?.map((category, index) => (
                                     <Chip key={index} label={category.name}
-                                                         style={{
-                                                             marginRight: '5px',
-                                                             marginBottom: '5px',
-                                                             backgroundColor: '#ffa726',
-                                                             color: '#ffffff'
-                                                         }} />
+                                          style={{
+                                              marginRight: '5px',
+                                              marginBottom: '5px',
+                                              backgroundColor: '#ffa726',
+                                              color: '#ffffff'
+                                          }} />
                                 ))}
                             </Typography>
                             <Typography variant="body2" sx={{ display: 'block' }}>
                                 Tagi:
                                 {selectedImage.tags?.map((tag, index) => (
                                     <Chip key={index} label={tag.name} style={{
-                                marginRight: '5px',
-                                marginBottom: '5px',
-                                backgroundColor: '#f06292',
-                                color: '#ffffff'
-                            }} />
+                                        marginRight: '5px',
+                                        marginBottom: '5px',
+                                        backgroundColor: '#f06292',
+                                        color: '#ffffff'
+                                    }} />
                                 ))}
                             </Typography>
                         </DialogContent>
