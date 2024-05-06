@@ -2,20 +2,23 @@ import React, { Component } from 'react';
 import IMenuItem from "../../../Domain/Page/Dto/IMenuItem";
 import {
     AppBar,
-    Box,
+    Box, Button,
     Container,
     createTheme,
     styled,
     ThemeProvider,
     Toolbar,
 } from "@mui/material";
-import { Link as RouterLink } from 'react-router-dom';
 import PageDomain from "../../../Domain/Page/PageDomain";
-import { StylesContext, StylesProvider } from '../Providers/StylesProvider';
 import LoadingScreen from "./LoadingScreen";
-import IStyles from "../../../Domain/Page/Dto/IStyles";
-import { IGlobalStyles } from "../../../Domain/Page/Dto/IGlobalStyles";
-import { getDefaultStyles } from "../DefaultStyles";
+import { Link as RouterLink } from 'react-router-dom';
+
+const StyledButton = styled(Button)(({ theme }) => ({
+    margin: theme.spacing(1),
+    '&:hover': {
+        textDecoration: 'underline',
+    },
+}));
 
 const StyledLink = styled(RouterLink)(({ theme }) => ({
     margin: theme.spacing(1),
@@ -47,6 +50,7 @@ const theme = createTheme({
 interface MenuItemsComponentState {
     menuItems: IMenuItem[];
     isLoading: boolean;
+    isScrolled: boolean;
 }
 
 export default class MenuItemsComponent extends Component<{}, MenuItemsComponentState> {
@@ -57,13 +61,24 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
         this.state = {
             menuItems: [],
             isLoading: false,
+            isScrolled: false,
         };
         this.pageDomain = new PageDomain();
     }
 
     componentDidMount(): void {
         this.fetchMenuItems();
+        window.addEventListener('scroll', this.handleScroll);
     }
+
+    componentWillUnmount(): void {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    private handleScroll = (): void => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        this.setState({ isScrolled: scrollTop > 0 });
+    };
 
     private async fetchMenuItems(): Promise<void> {
         this.setState({ isLoading: true });
@@ -74,45 +89,31 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
     };
 
     render() {
-        const { menuItems } = this.state;
+        const { menuItems, isScrolled } = this.state;
 
         if (this.state.isLoading) return <LoadingScreen />;
 
         return (
             <>
-                {/*<StylesProvider>*/}
-                {/*    <StylesContext.Consumer>*/}
-                {/*        {styles => {*/}
-                {/*            let stylesObj = styles as IGlobalStyles | IStyles;*/}
-
-                            return (
-                                <AppBar position="sticky" sx={{
-                                    bgcolor: '#a83232',
-                                    boxShadow: 'none',
-                                    color: '#fff',
-                                    mt: -35,
-                                    fontFamily: 'Robot'
-                                }}>
-                                    <Container>
-                                        <Toolbar disableGutters>
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                                                <ThemeProvider theme={theme}>
-                                                    <Box sx={{ display: 'flex' }}>
-                                                        {menuItems.map((item) => (
-                                                            <StyledLink to={item.url || '#'} key={item.id}>
-                                                                {item.name}
-                                                            </StyledLink>
-                                                        ))}
-                                                    </Box>
-                                                </ThemeProvider>
-                                            </Box>
-                                        </Toolbar>
-                                    </Container>
-                                </AppBar>
-                            );
-                        {/*}}*/}
-                {/*    </StylesContext.Consumer>*/}
-                {/*</StylesProvider>*/}
+                <AppBar position="sticky" sx={{ bgcolor: isScrolled ? '#a83232' : 'transparent', boxShadow: 'none', color: '#fff', mt: -35, transition: 'background-color 0.3s ease' }}>
+                    <Container>
+                        <Toolbar disableGutters>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                                <ThemeProvider theme={theme}>
+                                </ThemeProvider>
+                                <Box sx={{ display: 'flex' }}>
+                                    {menuItems.map((item) => (
+                                        <StyledButton key={item.id} color="inherit">
+                                            <StyledLink to={item.url || '#'} key={item.id}>
+                                                {item.name}
+                                            </StyledLink>
+                                        </StyledButton>
+                                    ))}
+                                </Box>
+                            </Box>
+                        </Toolbar>
+                    </Container>
+                </AppBar>
             </>
         );
     }
