@@ -10,6 +10,7 @@ export default class RepositoryManager {
         this.client = axios.create({
             baseURL: this.baseUrl,
             headers: {
+                'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             }
         });
