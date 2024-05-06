@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Paper, Typography, Grid, Button, AppBar, Toolbar } from '@mui/material';
+import { Container, Paper, Typography, Grid, AppBar, Toolbar } from '@mui/material';
 import { apiUrl } from '../../../env';
 import LoadingScreen from '../../../Infrastructure/Shared/components/LoadingScreen';
 import IProject from '../Dto/IProject';
 import PageDomain from '../../../Domain/Page/PageDomain';
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MenuItemsComponent from "../../../Infrastructure/Shared/components/MenuItemsComponent";
 import Footer from "../../../Infrastructure/Shared/components/Footer";
 import DOMPurify from 'dompurify';
 
-interface RouteParams {
-    projectId: string;
-}
-
-
 export function ProjectDetail() {
     const [project, setProject] = useState<IProject | null>(null);
     const { projectId } = useParams<{ projectId: string }>();
-    const pageDomain = new PageDomain();
 
     useEffect(() => {
         const fetchProject = async (projectId: string | undefined) => {
+            const pageDomain = new PageDomain();
             try {
                 if (project && project.id === projectId) {
                     return;
@@ -33,8 +28,7 @@ export function ProjectDetail() {
         };
 
         fetchProject(projectId);
-    }, [projectId, pageDomain]);
-
+    }, [projectId]);
 
     if (!project) {
         return <LoadingScreen />;
