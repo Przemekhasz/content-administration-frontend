@@ -30,7 +30,6 @@ jobs:
           host: ${{ secrets.OVH_HOST }}
           username: ${{ secrets.OVH_USERNAME }}
           password: ${{ secrets.OVH_PASSWORD }}
-          port: ${{ secrets.OVH_PORT }}
           script: |
             cd /var/www/content-administration-frontend
             git pull
