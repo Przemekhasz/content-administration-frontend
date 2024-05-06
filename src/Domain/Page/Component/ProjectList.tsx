@@ -10,7 +10,7 @@ import DOMPurify from "dompurify";
 
 const statusStyles = {
     inProgress: {
-        bgcolor: 'primary.main', // Blue background for "In Progress"
+        bgcolor: 'primary.main',
         color: 'common.white',
         fontWeight: 'bold',
         borderRadius: '4px',
@@ -47,10 +47,6 @@ export default class ProjectList extends Component<ProjectProps> {
 
     constructor(props: ProjectProps) {
         super(props);
-        this.state = {
-            isLoading: false,
-            error: undefined
-        };
         this.pageDomain = new PageDomain();
         this.projects = null;
     }
@@ -60,8 +56,6 @@ export default class ProjectList extends Component<ProjectProps> {
     }
 
     private async fetchProjects(): Promise<void> {
-        this.setState({ isLoading: true });
-
         try {
             this.projects = await this.pageDomain.getPageProjects(this.props.page.id);
             this.setState({ isLoading: false });
@@ -69,6 +63,7 @@ export default class ProjectList extends Component<ProjectProps> {
             this.setState({ isLoading: false });
         }
     };
+
     render() {
         const { projects } = this;
 
@@ -82,7 +77,7 @@ export default class ProjectList extends Component<ProjectProps> {
                     )}
                     <Grid container spacing={3}>
                         {projects?.map((project, index) => (
-                            <Grid item xs={12} key={index}>
+                            <Grid item xs={12} sm={6} key={index}>
                                 <Link to={`/project/${project.id}`} style={{textDecoration: 'none'}}>
                                     <Paper sx={{
                                         p: 2,
@@ -92,8 +87,8 @@ export default class ProjectList extends Component<ProjectProps> {
                                             boxShadow: 2,
                                         },
                                         backgroundColor: index % 2 === 0 ? 'grey.200' : 'common.white',
-                                        // display: 'flex',
-                                        flexDirection: {xs: 'column', sm: index % 2 === 0 ? 'row-reverse' : 'row'},
+                                        display: 'flex',
+                                        flexDirection: 'column',
                                         alignItems: 'center',
                                         gap: 2
                                     }}>
