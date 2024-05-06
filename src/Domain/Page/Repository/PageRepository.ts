@@ -1,7 +1,6 @@
 import RepositoryManager from "../../../Infrastructure/RepositoryManager";
 import IPage from "../Dto/IPage";
 import IMenuItem from "../Dto/IMenuItem";
-import Collection from "../../../Infrastructure/Shared/Interface/Collection";
 import IProject from "../Dto/IProject";
 import IGallery from "../Dto/IGallery";
 import IStyles from "../Dto/IStyles";
