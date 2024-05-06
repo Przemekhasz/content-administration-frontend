@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Paper, Typography, Grid, AppBar, Toolbar } from '@mui/material';
+import { Container, Paper, Typography, Grid } from '@mui/material'; // Usunięto nieużywane zmienne AppBar i Toolbar
 import { apiUrl } from '../../../env';
 import LoadingScreen from '../../../Infrastructure/Shared/components/LoadingScreen';
 import IProject from '../Dto/IProject';
@@ -17,9 +17,6 @@ export function ProjectDetail() {
         const fetchProject = async (projectId: string | undefined) => {
             const pageDomain = new PageDomain();
             try {
-                if (project && project.id === projectId) {
-                    return;
-                }
                 const fetchedProject = await pageDomain.getProjectById(projectId);
                 setProject(fetchedProject);
             } catch (error) {
@@ -28,7 +25,7 @@ export function ProjectDetail() {
         };
 
         fetchProject(projectId);
-    }, [projectId]);
+    }, [projectId]); // Dodano projectId jako zależność hooka useEffect
 
     if (!project) {
         return <LoadingScreen />;
