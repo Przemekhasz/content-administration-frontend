@@ -8,6 +8,7 @@ import IGallery from "../Dto/IGallery";
 import LoadingScreen from "../../../Infrastructure/Shared/components/LoadingScreen";
 import MenuItemsComponent from "../../../Infrastructure/Shared/components/MenuItemsComponent";
 import Footer from "../../../Infrastructure/Shared/components/Footer";
+import DOMPurify from "dompurify";
 
 export const GalleryImages: React.FC = () => {
     const [gallery, setGallery] = useState<IGallery | null>(null);
@@ -130,8 +131,9 @@ export const GalleryImages: React.FC = () => {
                                      height: 'auto',
                                      marginBottom: '20px'
                                  }} />
-                            <Typography variant="body1" sx={{ marginBottom: '12px' }}>
-                                {selectedImage.description}
+                            <Typography variant="body1" sx={{ marginBottom: '12px' }} gutterBottom>
+                                <Typography variant="body1"
+                                            dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(selectedImage.description || '')}}/>
                             </Typography>
                             <Typography variant="body2" sx={{ display: 'block', marginBottom: '8px' }}>
                                 Kategorie:
