@@ -125,7 +125,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                           style={{
                                                               marginRight: '5px',
                                                               marginBottom: '5px',
-                                                              backgroundColor: '#333',
+                                                              backgroundColor: '#a83232',
                                                               color: '#ffffff'
                                                           }}/>
                                                 ))}
@@ -136,7 +136,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                     <Chip key={tagIndex} label={tag.name} style={{
                                                         marginRight: '5px',
                                                         marginBottom: '5px',
-                                                        backgroundColor: '#333',
+                                                        backgroundColor: '#a83232',
                                                         color: '#ffffff'
                                                     }}/>
                                                 ))}

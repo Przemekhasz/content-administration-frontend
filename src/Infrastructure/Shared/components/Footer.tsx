@@ -37,7 +37,7 @@ class Footer extends Component<{}, FooterState> {
     render() {
         return (
             <Box sx={{
-                backgroundColor: '#303030',
+                backgroundColor: '#a83232',
                 color: 'white',
                 padding: 3,
                 marginTop: 3

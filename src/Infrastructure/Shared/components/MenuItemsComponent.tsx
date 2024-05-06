@@ -87,7 +87,7 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
 
                             return (
                                 <AppBar position="sticky" sx={{
-                                    bgcolor: '#333',
+                                    bgcolor: '#a83232',
                                     boxShadow: 'none',
                                     color: '#fff',
                                     mt: -35,
