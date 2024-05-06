@@ -14,10 +14,10 @@ export const GalleryImages: React.FC = () => {
     const [gallery, setGallery] = useState<IGallery | null>(null);
     const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
     const { galleryId } = useParams<{ galleryId: string }>();
-    const pageDomain = new PageDomain();
 
     useEffect(() => {
         const fetchGallery = async () => {
+            const pageDomain = new PageDomain();
             try {
                 const fetchedGallery = await pageDomain.getGalleryById(galleryId);
                 setGallery(fetchedGallery);
@@ -27,7 +27,7 @@ export const GalleryImages: React.FC = () => {
         };
 
         fetchGallery();
-    }, [galleryId, pageDomain]);
+    }, [galleryId]);
 
     const handleImageClick = (image: IImage) => {
         setSelectedImage(image);
@@ -166,3 +166,4 @@ export const GalleryImages: React.FC = () => {
         </>
     );
 };
+
