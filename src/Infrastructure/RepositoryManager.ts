@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import {apiUrl} from "../env";
+import { apiUrl } from "../env";
 
 export default class RepositoryManager {
     private readonly baseUrl: string;
@@ -9,6 +9,9 @@ export default class RepositoryManager {
         this.baseUrl = apiUrl;
         this.client = axios.create({
             baseURL: this.baseUrl,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     }
 
