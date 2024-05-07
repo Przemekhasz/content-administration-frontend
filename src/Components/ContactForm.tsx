@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent, FormEvent } from 'react';
-import { TextField, Button, Grid, Typography } from '@mui/material';
+import {TextField, Button, Grid, Typography, Container} from '@mui/material';
 import IContact from "../Models/IContact";
 import ContactDomain from "../Domain/Contact/ContactDomain";
 
@@ -109,56 +109,58 @@ export class ContactForm extends Component<{}, ContactFormState> {
         const { formData, errors } = this.state;
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <Typography variant="h6">Contact Form</Typography>
+            <Container>
+                <form onSubmit={this.handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                            Kontakt
+                        </Typography>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="email"
+                                label="Email"
+                                variant="outlined"
+                                value={formData.email}
+                                onChange={this.handleChange}
+                                error={!!errors.email}
+                                helperText={errors.email}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="topic"
+                                label="Topic"
+                                variant="outlined"
+                                value={formData.topic}
+                                onChange={this.handleChange}
+                                error={!!errors.topic}
+                                helperText={errors.topic}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                name="content"
+                                label="Content"
+                                variant="outlined"
+                                multiline
+                                rows={4}
+                                value={formData.content}
+                                onChange={this.handleChange}
+                                error={!!errors.content}
+                                helperText={errors.content}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button type="submit" variant="contained" color="primary">
+                                Submit
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            name="email"
-                            label="Email"
-                            variant="outlined"
-                            value={formData.email}
-                            onChange={this.handleChange}
-                            error={!!errors.email}
-                            helperText={errors.email}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            name="topic"
-                            label="Topic"
-                            variant="outlined"
-                            value={formData.topic}
-                            onChange={this.handleChange}
-                            error={!!errors.topic}
-                            helperText={errors.topic}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            name="content"
-                            label="Content"
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            value={formData.content}
-                            onChange={this.handleChange}
-                            error={!!errors.content}
-                            helperText={errors.content}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button type="submit" variant="contained" color="primary">
-                            Submit
-                        </Button>
-                    </Grid>
-                </Grid>
-            </form>
+                </form>
+            </Container>
         );
     }
 }
