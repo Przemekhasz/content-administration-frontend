@@ -39,12 +39,6 @@ jobs:
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          DISCORD_EMBEDS: ${{ steps.read_embed.outputs.embeds }}
+          DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has been completed successfully.","color":65280,"fields":[{"name":"Application Link","value":"[propelascend.pl](https://propelascend.pl)","inline":true},{"name":"Repository","value":"[GitHub Repository](https://github.com/Przemekhasz/content-administration-frontend)","inline":true}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"},"footer":{"text":"Project Logo","icon_url":"https://propelascend.pl/logo-propel-ascend.png"}}]'
         with:
           args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
-
-      - name: Read embed file
-        id: read_embed
-        run: |
-          cd ${{ github.workspace }}/.github/workflows
-          cat discord_payload.json
