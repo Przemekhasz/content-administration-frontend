@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Grid, Paper, Typography, Chip, Container } from '@mui/material';
+import React, { Component, Suspense } from 'react';
+import { Grid, Paper, Typography, Chip, Container, CircularProgress, Button } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import PageDomain from "../Domain/Page/PageDomain";
@@ -41,14 +41,18 @@ interface ProjectProps {
     page: IPage;
 }
 
-export default class ProjectList extends Component<ProjectProps> {
+interface ProjectState {
+    isLoading: boolean;
+    projects: IProject[] | null;
+}
+
+export default class ProjectList extends Component<ProjectProps, ProjectState> {
     private pageDomain: PageDomain;
-    private projects: IProject[] | null;
 
     constructor(props: ProjectProps) {
         super(props);
         this.pageDomain = new PageDomain();
-        this.projects = null;
+        this.state = { isLoading: true, projects: null };
     }
 
     componentDidMount(): void {
@@ -57,26 +61,34 @@ export default class ProjectList extends Component<ProjectProps> {
 
     private async fetchProjects(): Promise<void> {
         try {
-            this.projects = await this.pageDomain.getPageProjects(this.props.page.id);
-            this.setState({ isLoading: false });
+            const projects = await this.pageDomain.getPageProjects(this.props.page.id);
+            this.setState({ projects, isLoading: false });
         } catch (error) {
+            console.error('Failed to load projects:', error);
             this.setState({ isLoading: false });
         }
-    };
+    }
 
     render() {
-        const { projects } = this;
+        const { isLoading, projects } = this.state;
+        if (isLoading) {
+            return <CircularProgress />;
+        }
+
+        const displayProjects = projects?.slice(0, 2);
 
         return (
             <ThemeProvider theme={theme}>
                 <Container>
                     {projects && projects.length > 0 && (
-                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
-                            Projekty
-                        </Typography>
+                        <>
+                            <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
+                                Projekty
+                            </Typography>
+                        </>
                     )}
                     <Grid container spacing={3}>
-                        {projects?.map((project, index) => (
+                        {displayProjects?.map((project, index) => (
                             <Grid item xs={12} sm={6} key={index}>
                                 <Link to={`/project/${project.id}`} style={{textDecoration: 'none'}}>
                                     <Paper sx={{
@@ -92,11 +104,13 @@ export default class ProjectList extends Component<ProjectProps> {
                                         alignItems: 'center',
                                         gap: 2
                                     }}>
-                                        <img
-                                            src={apiUrl + '/uploads/img/' + project.details?.[0]?.imagePath ?? ''}
-                                            alt={project.title ?? ''}
-                                            style={{width: '100%', height: 'auto'}}
-                                        />
+                                        <Suspense fallback={<CircularProgress />}>
+                                            <img
+                                                src={apiUrl + '/uploads/img/' + project.details?.[0]?.imagePath ?? ''}
+                                                alt={project.title ?? ''}
+                                                style={{width: '100%', height: 'auto'}}
+                                            />
+                                        </Suspense>
                                         <div>
                                             <Typography variant="h5" gutterBottom>
                                                 {project.title}
@@ -106,10 +120,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                 {'inProgress'}
                                             </div>
                                             {project.mainDescription && (
-                                                <Typography variant="body1" gutterBottom>
-                                                    <Typography variant="body1"
-                                                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(project.mainDescription || '')}}/>
-                                                </Typography>
+                                                <Typography variant="body1" gutterBottom dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(project.mainDescription || '')}}/>
                                             )}
                                         </div>
                                         <div>
@@ -120,7 +131,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                           style={{
                                                               marginRight: '5px',
                                                               marginBottom: '5px',
-                                                              backgroundColor: '#a83232',
+                                                              backgroundColor: '#011226',
                                                               color: '#ffffff'
                                                           }}/>
                                                 ))}
@@ -131,7 +142,7 @@ export default class ProjectList extends Component<ProjectProps> {
                                                     <Chip key={tagIndex} label={tag.name} style={{
                                                         marginRight: '5px',
                                                         marginBottom: '5px',
-                                                        backgroundColor: '#a83232',
+                                                        backgroundColor: '#011226',
                                                         color: '#ffffff'
                                                     }}/>
                                                 ))}
@@ -142,6 +153,17 @@ export default class ProjectList extends Component<ProjectProps> {
                             </Grid>
                         ))}
                     </Grid>
+                    {projects && projects.length > 0 && (
+                        <>
+                            {projects.length > 1 && (
+                                <div style={{textAlign: 'center', marginBottom: '20px', marginTop: '20px'}}>
+                                    <Button variant="contained" color="primary" component={Link} to={`/projects`}>
+                                        Zobacz wszystkie projekty
+                                    </Button>
+                                </div>
+                            )}
+                        </>
+                    )}
                 </Container>
             </ThemeProvider>
         );

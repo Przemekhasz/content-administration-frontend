@@ -34,10 +34,11 @@ class Footer extends Component<{}, FooterState> {
         this.setState({ footer: res, isLoading: false })
     }
 
+    // TODO: Add dynamic social media link & icons
     render() {
         return (
             <Box sx={{
-                backgroundColor: '#a83232',
+                backgroundColor: '#011226',
                 color: 'white',
                 padding: 3,
                 marginTop: 3
