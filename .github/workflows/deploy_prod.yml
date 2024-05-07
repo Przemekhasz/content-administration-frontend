@@ -38,7 +38,7 @@ jobs:
           node-version: '18'
 
       - name: Install ESLint
-        run: npm install eslint
+        run: npm install eslint --legacy-peer-deps
 
       - name: Run ESLint
         run: npx eslint .
