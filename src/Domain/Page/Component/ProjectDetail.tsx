@@ -13,11 +13,11 @@ export function ProjectDetail() {
     const [project, setProject] = useState<IProject | null>(null);
     const { projectId } = useParams<{ projectId: string }>();
 
-    useEffect(() => {
-        const fetchProject = async (projectId: string | undefined) => {
-            const pageDomain = new PageDomain();
+    useEffect((): void => {
+        const fetchProject = async (projectId: string | undefined): Promise<void> => {
+            const pageDomain: PageDomain = new PageDomain();
             try {
-                const fetchedProject = await pageDomain.getProjectById(projectId);
+                const fetchedProject: IProject = await pageDomain.getProjectById(projectId);
                 setProject(fetchedProject);
             } catch (error) {
                 console.error('Error fetching project:', error);
@@ -25,7 +25,7 @@ export function ProjectDetail() {
         };
 
         fetchProject(projectId);
-    }, [projectId]); // Dodano projectId jako zależność hooka useEffect
+    }, [projectId]);
 
     if (!project) {
         return <LoadingScreen />;
