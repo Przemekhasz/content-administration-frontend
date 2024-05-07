@@ -1,5 +1,5 @@
-import {IGlobalStyles} from "../../Domain/Page/Dto/IGlobalStyles";
-import IStyles from "../../Domain/Page/Dto/IStyles";
+import {IGlobalStyles} from "../../Models/IGlobalStyles";
+import IStyles from "../../Models/IStyles";
 
 
 export default class DefaultStyles implements IGlobalStyles, IStyles {
