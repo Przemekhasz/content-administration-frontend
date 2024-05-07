@@ -13,32 +13,29 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js and npm
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Build project
-        run: npm run build
-
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.OVH_HOST }}
           username: ${{ secrets.OVH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/content-administration-frontend
-            git pull
+          run: ./scripts/deploy_script.sh
 
-      - name: Notify Discord
-        if: always()
+      - name: Notify Discord on success
+        if: success()
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has been completed successfully.","color":65280,"fields":[{"name":"Application Link","value":"[propelascend.pl](https://propelascend.pl)","inline":true},{"name":"Repository","value":"[GitHub Repository](https://github.com/Przemekhasz/content-administration-frontend)","inline":true}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"}}]'
         with:
-          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
+          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed successfully.'
+
+      - name: Notify Discord on failure
+        if: failure()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has failed.","color":16711680,"fields":[{"name":"Error","value":"There was an error during deployment. Please check the logs for more information.","inline":false}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"}}]'
+        with:
+          args: 'Failed to deploy the project {{ EVENT_PAYLOAD.repository.full_name }}.'
+
