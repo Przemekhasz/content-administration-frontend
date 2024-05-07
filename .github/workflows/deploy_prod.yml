@@ -36,6 +36,7 @@ jobs:
 
       - name: Notify Discord
         if: always()
-        uses: Ilshidur/action-discord@v2
-        with:
-          args: send --webhook-url="${{ secrets.DISCORD_WEBHOOK_URL }}" --color=green --title="Production Deployment" --description="The deployment to production has been completed successfully."
+        run: |
+          curl -H "Content-Type: application/json" -X POST -d '{"content": "The deployment to production has been completed successfully."}' $DISCORD_WEBHOOK_URL
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
