@@ -47,6 +47,12 @@ const theme = createTheme({
     },
 });
 
+const LogoImg = styled('img')({
+    width: 60,
+    marginLeft: 10,
+    marginRight: 'auto',
+});
+
 interface MenuItemsComponentState {
     menuItems: IMenuItem[];
     isLoading: boolean;
@@ -95,13 +101,14 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
 
         return (
             <>
-                <AppBar position="sticky" sx={{ bgcolor: isScrolled ? '#a83232' : 'transparent', boxShadow: 'none', color: '#fff', mt: -35, transition: 'background-color 0.3s ease' }}>
+                <AppBar position="sticky" sx={{ bgcolor: isScrolled ? '#a83232' : 'transparent', boxShadow: 'none', color: '#fff', transition: 'background-color 0.3s ease', mt: -35 }}>
                     <Container>
                         <Toolbar disableGutters>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                 <ThemeProvider theme={theme}>
+                                    <LogoImg src="https://api.propelascend.pl:8080/uploads/img/2027df5ebf34fe722060d3932067ca952273bb32.png" alt="Logo" />
                                 </ThemeProvider>
-                                <Box sx={{ display: 'flex' }}>
+                                <Box sx={{display: 'flex'}}>
                                     {menuItems.map((item) => (
                                         <StyledButton key={item.id} color="inherit">
                                             <StyledLink to={item.url || '#'} key={item.id}>
