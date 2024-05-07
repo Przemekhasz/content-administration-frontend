@@ -68,7 +68,7 @@ jobs:
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has been completed successfully.","color":65280,"fields":[{"name":"Application Link","value":"[propelascend.pl](https://propelascend.pl)","inline":true},{"name":"Repository","value":"[GitHub Repository](https://github.com/Przemekhasz/content-administration-frontend)","inline":true}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"},"image":{"url":"https://tenor.com/view/konon-kononowicz-bestia-gif-20735619"}}]'
+          DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has been completed successfully.","color":65280,"fields":[{"name":"Application Link","value":"[propelascend.pl](https://propelascend.pl)","inline":true},{"name":"Repository","value":"[GitHub Repository](https://github.com/Przemekhasz/content-administration-frontend)","inline":true}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"},"image":{"url":"https://cdn.discordapp.com/attachments/917396643609976862/1237399669840285807/image.png?ex=663b81bf&is=663a303f&hm=6f9b80ffcc99a233d1b3670a06c11cb1c6f00a980a65eeeb3b7422b161165a5a&"}}]'
         with:
           args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed successfully.'
 
@@ -77,7 +77,7 @@ jobs:
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has failed.","color":16711680,"fields":[{"name":"Error","value":"There was an error during deployment. Please check the logs for more information.","inline":false}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"},"image":{"url":"https://tenor.com/view/kononowicz-p%C5%82acz-gif-24227043"}}]'
+          DISCORD_EMBEDS: '[{"title":"Deployment Notification","description":"The deployment to production has failed.","color":16711680,"fields":[{"name":"Error","value":"There was an error during deployment. Please check the logs for more information.","inline":false}],"thumbnail":{"url":"https://propelascend.pl/logo-propel-ascend.png"},"image":{"url":"https://cdn.discordapp.com/attachments/917396643609976862/1237399723019862076/image.png?ex=663b81cb&is=663a304b&hm=23bf1564d8a220592912da5a56ebcde169d93bb125a8e30b8741fd038a88bdc9&"}}]'
         with:
           args: 'Failed to deploy the project {{ EVENT_PAYLOAD.repository.full_name }}.'
 
