@@ -1,14 +1,14 @@
 import React, { Component, Suspense, lazy } from 'react';
 import {Routes, Route} from 'react-router-dom';
-import LoadingScreen from "./Infrastructure/Shared/components/LoadingScreen";
-import IPage from "./Domain/Page/Dto/IPage";
+import LoadingScreen from "./Components/LoadingScreen";
+import IPage from "./Models/IPage";
 import PageDomain from "./Domain/Page/PageDomain";
-import { PageNotFound } from './Infrastructure/Shared/components/PageNotFound';
-import { ProjectDetail } from './Domain/Page/Component/ProjectDetail';
+import { PageNotFound } from './Components/PageNotFound';
+import { ProjectDetail } from './Pages/ProjectDetail';
 import "./App.css";
-import {GalleryImages} from "./Domain/Page/Component/GalleryImages";
+import {GalleryImages} from "./Pages/GalleryImages";
 
-const PageViewer = lazy(() => import("./Domain/Page/Component/PageViewer"));
+const PageViewer = lazy(() => import("./Pages/PageViewer"));
 
 interface PageViewerState {
     isLoading: boolean;
