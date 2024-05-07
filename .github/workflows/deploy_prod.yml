@@ -45,4 +45,6 @@ jobs:
 
       - name: Read embed file
         id: read_embed
-        run: echo ::set-output name=embeds::"$(cat discord_payload.json)"
+        run: |
+          cd ${{ github.workspace }}/.github/workflows
+          echo ::set-output name=embeds::"$(cat discord_payload.json)"
