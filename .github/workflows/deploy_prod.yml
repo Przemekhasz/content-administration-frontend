@@ -15,12 +15,12 @@ jobs:
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
+        run: |
+          ./scripts/deploy_script.sh
         with:
           host: ${{ secrets.OVH_HOST }}
           username: ${{ secrets.OVH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          run: |
-            ./scripts/deploy_script.sh
 
       - name: Notify Discord on success
         if: success()
