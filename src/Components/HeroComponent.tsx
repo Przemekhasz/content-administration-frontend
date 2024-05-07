@@ -3,6 +3,7 @@ import { Box, IconButton } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import IPage from "../Models/IPage";
 import { apiUrl } from "../env";
+import IPageHeader from "../Models/IPageHeader";
 
 interface HeroComponentProps {
     page: IPage;
@@ -12,7 +13,7 @@ export default class HeroComponent extends Component<HeroComponentProps> {
     render() {
         const { page } = this.props;
 
-        const mainHeader = page.pageHeaders?.find(header => header.isMain);
+        const mainHeader: IPageHeader | undefined = page.pageHeaders?.find(header => header.isMain);
 
         return (
             <Box sx={{
@@ -38,7 +39,7 @@ export default class HeroComponent extends Component<HeroComponentProps> {
                 }
             }}
             >
-                <h1>{mainHeader ? mainHeader.name : "No main header found"}</h1>
+                <h1>{mainHeader ? mainHeader.name : ""}</h1>
                 <IconButton
                     onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
                     sx={{

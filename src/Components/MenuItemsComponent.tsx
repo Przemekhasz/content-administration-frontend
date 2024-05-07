@@ -101,7 +101,7 @@ export default class MenuItemsComponent extends Component<{}, MenuItemsComponent
 
         return (
             <>
-                <AppBar position="sticky" sx={{ bgcolor: isScrolled ? '#a83232' : 'transparent', boxShadow: 'none', color: '#fff', transition: 'background-color 0.3s ease', mt: -35 }}>
+                <AppBar position="sticky" sx={{ bgcolor: isScrolled ? '#011226' : 'transparent', boxShadow: 'none', color: '#fff', transition: 'background-color 0.3s ease', mt: -35 }}>
                     <Container>
                         <Toolbar disableGutters>
                             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
