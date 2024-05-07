@@ -1,5 +1,6 @@
 {
-  "embeds": [{
+  "embeds": [
+    {
       "title": "Deployment Notification",
       "description": "The deployment to production has been completed successfully.",
       "color": 65280,
@@ -22,5 +23,6 @@
         "text": "Project Logo",
         "icon_url": "https://propelascend.pl/logo-propel-ascend.png"
       }
-  }]
+    }
+  ]
 }
