@@ -13,14 +13,28 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build project
+        run: npm run build
+
       - name: Deploy to server
         uses: appleboy/ssh-action@master
-        run: |
-          ./scripts/deploy_script.sh
         with:
           host: ${{ secrets.OVH_HOST }}
           username: ${{ secrets.OVH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/content-administration-frontend
+            git pull
+            npm install --legacy-peer-deps
+            npm run build
 
       - name: Notify Discord on success
         if: success()
