@@ -3,7 +3,6 @@ import IPage from "../../../Models/IPage";
 import IProject from "../../../Models/IProject";
 import IGallery from "../../../Models/IGallery";
 import IStyles from "../../../Models/IStyles";
-import {IGlobalStyles} from "../../../Models/IGlobalStyles";
 import IBodyText from "../../../Models/IBodyText";
 
 export default class PageService {
