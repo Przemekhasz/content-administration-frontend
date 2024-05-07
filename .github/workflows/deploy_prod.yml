@@ -19,7 +19,8 @@ jobs:
           host: ${{ secrets.OVH_HOST }}
           username: ${{ secrets.OVH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: ./scripts/deploy_script.sh
+          run: |
+            ./scripts/deploy_script.sh
 
       - name: Notify Discord on success
         if: success()
