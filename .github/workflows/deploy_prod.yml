@@ -34,9 +34,9 @@ jobs:
             cd /var/www/content-administration-frontend
             git pull
 
-      - name: Notify Discord
-        if: always()
-        run: |
-          curl -H "Content-Type: application/json" -X POST -d '{"content": "The deployment to production has been completed successfully."}' $DISCORD_WEBHOOK_URL
+      - name: Discord notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
