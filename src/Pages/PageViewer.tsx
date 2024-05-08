@@ -26,15 +26,21 @@ export default class PageViewer extends Component<PageViewerProps> {
         const { page } = this.props;
 
         return (
-            <Box>
-                <MenuItemsComponent />
-                <HeroComponent page={page} />
-                <BodyTextComponent page={page} />
-                <ProjectList page={page} />
-                <GalleryList page={page} />
-                <ContactForm />
-                <Footer />
-            </Box>
+            <>
+                {page.isPublic ? (
+                    <Box>
+                        <MenuItemsComponent />
+                        <HeroComponent page={page} />
+                        <BodyTextComponent page={page} />
+                        <ProjectList page={page} />
+                        <GalleryList page={page} />
+                        <ContactForm />
+                        <Footer />
+                    </Box>
+                ) : (
+                    <h1>Niepubliczna</h1>
+                )}
+            </>
         );
     }
 }

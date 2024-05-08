@@ -58,7 +58,7 @@ export function ProjectDetail() {
     return (
         <>
             <MenuItemsComponent />
-            <Container sx={{ marginTop: '18rem', padding: isMobile ? '0' : '2rem' }}>
+            <Container sx={{ marginTop: '17rem', padding: isMobile ? '0' : '2rem' }}>
                 <Paper elevation={3} sx={{ p: '20px', mb: '20px', backgroundColor: '#011226', color: '#ffffff' }}>
                     <Typography variant="h4" align="center" gutterBottom>
                         {project.title}
