@@ -93,7 +93,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
         }));
     }
 
-    private handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    private async handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault();
         const { formData } = this.state;
         const errors = this.validateForm(formData);
@@ -104,7 +104,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
         }
 
         try {
-            this.contactDomain.postContact(formData);
+            await this.contactDomain.postContact(formData);
             this.clearForm();
             this.setState({
                 snackbarOpen: true,
@@ -121,6 +121,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
         }
     }
 
+
     private validateForm(formData: IContact) {
         const errors = {
             email: '',
@@ -136,10 +137,14 @@ export class ContactForm extends Component<{}, ContactFormState> {
 
         if (!formData.topic) {
             errors.topic = 'Topic is required';
+        } else if (formData.topic.length > 255) {
+            errors.topic = 'Topic cannot exceed 255 characters';
         }
 
         if (!formData.content) {
             errors.content = 'Content is required';
+        } else if (formData.content.length > 255) {
+            errors.content = 'Content cannot exceed 255 characters';
         }
 
         return errors;
