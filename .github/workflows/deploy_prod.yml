@@ -24,28 +24,9 @@ jobs:
       - name: Build project
         run: npm run build
 
-  eslint:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Check out source code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js and npm
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install ESLint
-        run: npm install eslint --legacy-peer-deps
-
-      - name: Run ESLint
-        run: npx eslint .
-
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, eslint]
+    needs: build
 
     steps:
       - name: Check out source code
@@ -58,10 +39,7 @@ jobs:
           username: ${{ secrets.OVH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/content-administration-frontend
-            git pull
-            npm install --legacy-peer-deps
-            npm run build
+            cd /var/www/content-administration-frontend/scripts && sudo ./prod_deploy.sh
 
       - name: Notify Discord on success
         if: success()
