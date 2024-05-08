@@ -1,7 +1,6 @@
 import IPage from "../../Models/IPage";
 import IPageQueryDomain from "./IPageQueryDomain";
 import PageService from "./Services/PageService";
-import IMenuItem from "../../Models/IMenuItem";
 import IGallery from "../../Models/IGallery";
 import IStyles from "../../Models/IStyles";
 import IBodyText from "../../Models/IBodyText";
