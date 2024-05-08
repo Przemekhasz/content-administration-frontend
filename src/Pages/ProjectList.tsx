@@ -121,9 +121,9 @@ export default class ProjectList extends Component<ProjectProps, ProjectState> {
                             </Link>
                         ))}
                     </List>
-                    {projects && projects.length > 5 && (
+                    {projects && projects.length > 1 && (
                         <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                            <Button variant="contained" component={Link} to="/all-projects" sx={{ backgroundColor: '#011226', color: '#ffffff' }}>
+                            <Button variant="contained" component={Link} to="/projects" sx={{ backgroundColor: '#011226', color: '#ffffff' }}>
                                 Zobacz wszystkie projekty
                             </Button>
                         </div>
