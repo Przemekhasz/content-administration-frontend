@@ -1,7 +1,46 @@
 import React, { Component, ChangeEvent, FormEvent } from 'react';
-import {TextField, Button, Grid, Typography, Container} from '@mui/material';
+import { TextField, Button, Grid, Typography, Container, Snackbar, Alert } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IContact from "../Models/IContact";
 import ContactDomain from "../Domain/Contact/ContactDomain";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#011226',
+        },
+    },
+    typography: {
+        fontFamily: 'Arial, sans-serif',
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    padding: '10px 20px',
+                    fontSize: '1rem',
+                }
+            }
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& label.Mui-focused': {
+                        color: '#011226',
+                    },
+                    '& .MuiInput-underline:after': {
+                        borderBottomColor: '#011226',
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        '&.Mui-focused fieldset': {
+                            borderColor: '#011226',
+                        },
+                    },
+                }
+            }
+        }
+    }
+});
 
 interface ContactFormState {
     formData: IContact;
@@ -10,6 +49,9 @@ interface ContactFormState {
         topic: string;
         content: string;
     };
+    snackbarOpen: boolean;
+    snackbarMessage: string;
+    snackbarSeverity: 'success' | 'error';
 }
 
 export class ContactForm extends Component<{}, ContactFormState> {
@@ -27,7 +69,10 @@ export class ContactForm extends Component<{}, ContactFormState> {
                 email: '',
                 topic: '',
                 content: '',
-            }
+            },
+            snackbarOpen: false,
+            snackbarMessage: '',
+            snackbarSeverity: 'success'
         };
         this.contactDomain = new ContactDomain();
         this.handleChange = this.handleChange.bind(this);
@@ -61,8 +106,18 @@ export class ContactForm extends Component<{}, ContactFormState> {
         try {
             this.contactDomain.postContact(formData);
             this.clearForm();
+            this.setState({
+                snackbarOpen: true,
+                snackbarMessage: 'Form submission successful!',
+                snackbarSeverity: 'success'
+            });
         } catch (error) {
             console.error('Error occurred while submitting form:', error);
+            this.setState({
+                snackbarOpen: true,
+                snackbarMessage: 'Failed to submit form.',
+                snackbarSeverity: 'error'
+            });
         }
     }
 
@@ -105,62 +160,77 @@ export class ContactForm extends Component<{}, ContactFormState> {
         });
     }
 
+    private handleCloseSnackbar = () => {
+        this.setState({
+            snackbarOpen: false
+        });
+    };
+
     render() {
-        const { formData, errors } = this.state;
+        const { formData, errors, snackbarOpen, snackbarMessage, snackbarSeverity } = this.state;
 
         return (
-            <Container>
-                <form onSubmit={this.handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
-                            Kontakt
-                        </Typography>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="email"
-                                label="Email"
-                                variant="outlined"
-                                value={formData.email}
-                                onChange={this.handleChange}
-                                error={!!errors.email}
-                                helperText={errors.email}
-                            />
+            <ThemeProvider theme={theme}>
+                <Container>
+                    <form onSubmit={this.handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }}>
+                                    Kontakt
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    name="email"
+                                    label="Email"
+                                    variant="outlined"
+                                    value={formData.email}
+                                    onChange={this.handleChange}
+                                    error={!!errors.email}
+                                    helperText={errors.email}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    name="topic"
+                                    label="Topic"
+                                    variant="outlined"
+                                    value={formData.topic}
+                                    onChange={this.handleChange}
+                                    error={!!errors.topic}
+                                    helperText={errors.topic}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    name="content"
+                                    label="Content"
+                                    variant="outlined"
+                                    multiline
+                                    rows={4}
+                                    value={formData.content}
+                                    onChange={this.handleChange}
+                                    error={!!errors.content}
+                                    helperText={errors.content}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, fontSize: '1.1rem' }}>
+                                    Submit
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="topic"
-                                label="Topic"
-                                variant="outlined"
-                                value={formData.topic}
-                                onChange={this.handleChange}
-                                error={!!errors.topic}
-                                helperText={errors.topic}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                name="content"
-                                label="Content"
-                                variant="outlined"
-                                multiline
-                                rows={4}
-                                value={formData.content}
-                                onChange={this.handleChange}
-                                error={!!errors.content}
-                                helperText={errors.content}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button type="submit" variant="contained" color="primary">
-                                Submit
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </form>
-            </Container>
+                    </form>
+                    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={this.handleCloseSnackbar}>
+                        <Alert onClose={this.handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                            {snackbarMessage}
+                        </Alert>
+                    </Snackbar>
+                </Container>
+            </ThemeProvider>
         );
     }
 }
