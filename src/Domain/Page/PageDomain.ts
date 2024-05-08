@@ -5,6 +5,7 @@ import IMenuItem from "../../Models/IMenuItem";
 import IGallery from "../../Models/IGallery";
 import IStyles from "../../Models/IStyles";
 import IBodyText from "../../Models/IBodyText";
+import IProject from "../../Models/IProject";
 
 export default class PageDomain implements IPageQueryDomain {
     private readonly pageQueryService: PageService;
@@ -26,7 +27,7 @@ export default class PageDomain implements IPageQueryDomain {
         return await this.pageQueryService.getPageBodyTexts(id);
     }
 
-    async getPageProjects(id: string | null | undefined): Promise<IMenuItem[]> {
+    async getPageProjects(id: string | null | undefined): Promise<IProject[]> {
         return await this.pageQueryService.getPageProjects(id);
     }
 
