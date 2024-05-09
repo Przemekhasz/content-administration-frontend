@@ -8,7 +8,7 @@ export default interface IPage {
     id?: string | null;
     pageName?: string | null;
     pageNumber?: number | null;
-    isPublic: boolean;
+    public: boolean;
     banner?: IBanner | null;
     logo?: ILogo | null;
     menuItem?: IMenuItem | null;

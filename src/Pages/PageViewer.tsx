@@ -6,16 +6,12 @@ import ProjectList from "./ProjectList";
 import GalleryList from "./GalleryList";
 import MenuItemsComponent from "../Components/MenuItemsComponent";
 import Footer from "../Components/Footer";
-import {BodyTextComponent} from "../Components/BodyTextComponent";
-import {ContactForm} from "../Components/ContactForm";
+import { ContactForm } from "../Components/ContactForm";
+import { BodyTextComponent } from "../Components/BodyTextComponent";
 
-interface PageViewerProps {
-    page: IPage;
-}
-
-export default class PageViewer extends Component<PageViewerProps> {
+class PageViewer extends Component<{ page: IPage }> {
     private pageIdStorage(): void {
-        localStorage.setItem("pageId", this.props.page.id ?? "")
+        localStorage.setItem("pageId", this.props.page.id ?? "");
     }
 
     componentDidMount(): void {
@@ -27,7 +23,7 @@ export default class PageViewer extends Component<PageViewerProps> {
 
         return (
             <>
-                {page.isPublic ? (
+                {page.public ? (
                     <Box>
                         <MenuItemsComponent />
                         <HeroComponent page={page} />
@@ -45,3 +41,4 @@ export default class PageViewer extends Component<PageViewerProps> {
     }
 }
 
+export default PageViewer;
