@@ -1,5 +1,5 @@
 export default interface IPageHeader {
     name: string;
-    isMain: boolean;
+    main: boolean;
     id: string;
 }

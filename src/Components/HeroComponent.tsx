@@ -13,7 +13,7 @@ export default class HeroComponent extends Component<HeroComponentProps> {
     render() {
         const { page } = this.props;
 
-        const mainHeader: IPageHeader | undefined = page.pageHeaders?.find(header => header.isMain);
+        const mainHeader: IPageHeader | undefined = page.pageHeaders?.find(header => header.main);
 
         return (
             <Box sx={{
