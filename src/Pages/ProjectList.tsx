@@ -48,7 +48,7 @@ interface ProjectState {
 
 export default class ProjectList extends Component<ProjectProps, ProjectState> {
     private pageDomain: PageDomain;
-    private projectsPerPage: number = 10; // TODO: dynamic data from api
+    private projectsPerPage: number = 3; // TODO: dynamic data from api
 
     constructor(props: ProjectProps) {
         super(props);
