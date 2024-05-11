@@ -50,7 +50,9 @@ class GalleryList extends Component<GalleryListProps, GalleryListState> {
             <Container>
                 {galleries && galleries.length > 0 && (
                     <>
-                        <Typography variant="h4" align="center" gutterBottom style={{ marginTop: '50px' }}>Galerie</Typography>
+                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
+                            Galerie
+                        </Typography>
                         <Grid container spacing={3}>
                             {galleries.map((gallery, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>

@@ -42,27 +42,28 @@ interface ProjectProps {
 
 interface ProjectState {
     isLoading: boolean;
-    projects: IProject[] | null;
-    currentPage: number;
+    projects: IProject[] | undefined;
 }
 
-export default class ProjectList extends Component<ProjectProps, ProjectState> {
+export default class PinnedProjects extends Component<ProjectProps, ProjectState> {
     private pageDomain: PageDomain;
-    private projectsPerPage: number = 10; // TODO: dynamic data from api
 
     constructor(props: ProjectProps) {
         super(props);
         this.pageDomain = new PageDomain();
-        this.state = { isLoading: true, projects: null, currentPage: 1 };
+        this.state = { isLoading: true, projects: undefined };
     }
 
     componentDidMount(): void {
-        this.fetchProjects();
+        this.fetchPinnedProjects();
     }
 
-    private async fetchProjects(): Promise<void> {
+    private async fetchPinnedProjects(): Promise<void> {
         try {
-            const projects = await this.pageDomain.getPageProjects(this.props.page.id);
+            const projects: IProject[] | undefined = await this.pageDomain.getPageProjects(this.props.page.id)
+                .then(projects => {
+                    return projects.filter(project => project.pinned);
+                });
             this.setState({ projects, isLoading: false });
         } catch (error) {
             console.error('Failed to load projects:', error);
@@ -70,34 +71,23 @@ export default class ProjectList extends Component<ProjectProps, ProjectState> {
         }
     }
 
-    private nextPage = (): void => {
-        this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
-    };
-
-    private prevPage = (): void => {
-        this.setState(prevState => ({ currentPage: prevState.currentPage - 1 }));
-    };
 
     render() {
-        const { isLoading, projects, currentPage } = this.state;
+        const { isLoading, projects } = this.state;
         if (isLoading) {
             return <CircularProgress />;
         }
-
-        const indexOfLastProject: number = currentPage * this.projectsPerPage;
-        const indexOfFirstProject: number = indexOfLastProject - this.projectsPerPage;
-        const currentProjects: IProject[] | undefined = projects?.slice(indexOfFirstProject, indexOfLastProject);
 
         return (
             <ThemeProvider theme={theme}>
                 <Container>
                     <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
-                        Projekty
+                        Przypięte Projekty
                     </Typography>
                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        {currentProjects?.map((project, index) => (
-                            <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }} key={index}>
-                                <ListItem alignItems="flex-start" sx={{ borderBottom: '1px solid #e0e0e0', pb: 2, mb: 2 }}>
+                        {projects?.map((project, index) => (
+                            <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <ListItem alignItems="flex-start" key={index} sx={{ borderBottom: '1px solid #e0e0e0', pb: 2, mb: 2 }}>
                                     <ListItemText
                                         primary={
                                             <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -133,18 +123,11 @@ export default class ProjectList extends Component<ProjectProps, ProjectState> {
                             </Link>
                         ))}
                     </List>
-                    {projects && projects.length > this.projectsPerPage && (
+                    {projects && projects.length >= 1 && (
                         <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                            {currentPage !== 1 && (
-                                <Button onClick={this.prevPage} sx={{ backgroundColor: '#011226', color: '#ffffff', marginRight: '10px' }}>
-                                    Poprzednia Strona
-                                </Button>
-                            )}
-                            {currentProjects && currentProjects.length === this.projectsPerPage && (
-                                <Button onClick={this.nextPage} sx={{ backgroundColor: '#011226', color: '#ffffff' }}>
-                                    Następna Strona
-                                </Button>
-                            )}
+                            <Button variant="contained" component={Link} to="/projects" sx={{ backgroundColor: '#011226', color: '#ffffff' }}>
+                                Zobacz wszystkie projekty
+                            </Button>
                         </div>
                     )}
                 </Container>

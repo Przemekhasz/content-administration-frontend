@@ -7,6 +7,7 @@ export default interface IProject {
     id?: string | null;
     title?: string | null;
     mainDescription?: string | null;
+    pinned: boolean;
     details?: IProjectDetail[] | null;
     author?: IUser | null;
     categories?: ICategory[] | null;

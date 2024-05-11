@@ -9,6 +9,7 @@ export default interface IPage {
     pageName?: string | null;
     pageNumber?: number | null;
     public: boolean;
+    showPinnedProjects: boolean;
     banner?: IBanner | null;
     logo?: ILogo | null;
     menuItem?: IMenuItem | null;

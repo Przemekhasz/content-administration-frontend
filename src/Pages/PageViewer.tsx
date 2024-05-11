@@ -8,6 +8,7 @@ import MenuItemsComponent from "../Components/MenuItemsComponent";
 import Footer from "../Components/Footer";
 import { ContactForm } from "../Components/ContactForm";
 import { BodyTextComponent } from "../Components/BodyTextComponent";
+import PinnedProjects from "./PinnedProjects";
 
 class PageViewer extends Component<{ page: IPage }> {
     private pageIdStorage(): void {
@@ -28,7 +29,11 @@ class PageViewer extends Component<{ page: IPage }> {
                         <MenuItemsComponent />
                         <HeroComponent page={page} />
                         <BodyTextComponent page={page} />
-                        <ProjectList page={page} />
+                        {page.showPinnedProjects ? (
+                            <PinnedProjects page={page} />
+                        ) : (
+                            <ProjectList page={page} />
+                        )}
                         <GalleryList page={page} />
                         <ContactForm />
                         <Footer />
