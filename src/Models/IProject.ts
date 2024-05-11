@@ -12,5 +12,5 @@ export default interface IProject {
     author?: IUser | null;
     categories?: ICategory[] | null;
     tags?: ITag[] | null;
-    status: 'inProgress' | 'completed';
+    status: string;
 }

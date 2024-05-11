@@ -18,7 +18,7 @@ const statusStyles = {
         border: '2px solid lightblue',
         borderColor: 'primary.dark'
     },
-    completed: {
+    done: {
         bgcolor: 'success.main',
         color: 'common.white',
         fontWeight: 'bold',
@@ -98,7 +98,11 @@ export default class PinnedProjects extends Component<ProjectProps, ProjectState
                                         }
                                         secondary={
                                             <>
-                                                <Box component="span" sx={statusStyles[project.status]}>
+                                                <Box component="span" sx={
+                                                    project.status === 'inProgress' ?
+                                                        statusStyles['inProgress'] :
+                                                        statusStyles['done']
+                                                }>
                                                     <b>Status:</b> {project.status === 'inProgress' ? 'W trakcie' : 'Zakończony'}
                                                 </Box>
                                                 <Typography
