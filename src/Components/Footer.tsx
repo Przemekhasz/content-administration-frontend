@@ -11,7 +11,7 @@ interface FooterState {
 }
 
 class Footer extends Component<{}, FooterState> {
-    private footerDomain: FooterDomain;
+    private readonly footerDomain: FooterDomain;
 
     constructor(props: {}) {
         super(props);
