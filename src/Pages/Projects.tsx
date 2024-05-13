@@ -77,7 +77,7 @@ export default class Projects extends Component<ProjectProps, ProjectState> {
     };
 
     render() {
-        const { isLoading, projects, currentPage, totalProjects } = this.state;
+        const { isLoading, projects, currentPage } = this.state;
         if (isLoading) {
             return <CircularProgress />;
         }
