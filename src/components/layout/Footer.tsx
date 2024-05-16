@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Box, Typography, Grid, IconButton } from '@mui/material';
-import {Facebook, Twitter, Instagram, LinkedIn, YouTube} from '@mui/icons-material';
+import { LinkedIn, GitHub} from '@mui/icons-material';
 import IFooter from "../../types/IFooter";
 import FooterDomain from "../../domain/Footer/FooterDomain";
 
@@ -45,20 +45,11 @@ class Footer extends Component<{}, FooterState> {
                 <Grid container spacing={2} justifyContent="center" alignItems="center">
                     <Grid item xs={12} md={4} textAlign="center">
                         <Typography variant="body1">{this.state.footer.followUs}</Typography>
-                        <IconButton color="inherit" component="a" href="https://www.linkedin.com/in/przemys%C5%82aw-tarapacki-6b175a229/" aria-label="LinkedIn">
-                            <LinkedIn />
+                        <IconButton href="https://www.linkedin.com/in/przemys%C5%82aw-tarapacki-6b175a229/" target="_blank" sx={{ color: 'white' }}>
+                            <LinkedIn fontSize="large" />
                         </IconButton>
-                        <IconButton color="inherit" component="a" href="https://www.facebook.com/profile.php?id=100008155635759" aria-label="Facebook">
-                            <Facebook />
-                        </IconButton>
-                        <IconButton color="inherit" component="a" href="https://twitter.com/Rumcajs60484194" aria-label="Twitter">
-                            <Twitter />
-                        </IconButton>
-                        <IconButton color="inherit" component="a" href="https://www.instagram.com/przeeemek18" aria-label="Instagram">
-                            <Instagram />
-                        </IconButton>
-                        <IconButton color="inherit" component="a" href="https://www.youtube.com/channel/UCnXEAHARicY9KgLFJv_hN6A" aria-label="YouTube">
-                            <YouTube />
+                        <IconButton href="https://github.com/Przemekhasz" target="_blank" sx={{ color: 'white' }}>
+                            <GitHub fontSize="large" />
                         </IconButton>
                     </Grid>
                     <Grid item xs={12} md={4} textAlign="center">

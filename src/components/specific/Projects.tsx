@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-    CircularProgress,
-    Container,
-    Typography,
-    Box
-} from '@mui/material';
+import { CircularProgress, Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageDomain from "../../domain/Page/PageDomain";
 import IPage from "../../types/IPage";
@@ -104,11 +99,15 @@ export default class Projects extends Component<ProjectProps, ProjectState> {
             );
         }
 
-        const filteredProjects: IProject[] = filterData(projects || [], filterValues);
+        if (!projects || projects.length === 0) {
+            return null;
+        }
+
+        const filteredProjects: IProject[] = filterData(projects, filterValues);
 
         const indexOfLastProject: number = currentPage * this.projectsPerPage;
         const indexOfFirstProject: number = indexOfLastProject - this.projectsPerPage;
-        const currentProjects: IProject[] | undefined = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+        const currentProjects: IProject[] = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
 
         return (
             <ThemeProvider theme={theme}>
@@ -117,7 +116,7 @@ export default class Projects extends Component<ProjectProps, ProjectState> {
                         Projects
                     </Typography>
                     <FilterManager filters={filters} onFilterChange={this.handleFilterChange} />
-                    {currentProjects && currentProjects.map((project, index) => (
+                    {currentProjects.map((project, index) => (
                         <ProjectItem key={index} project={project} />
                     ))}
                     {filteredProjects.length > this.projectsPerPage && (
