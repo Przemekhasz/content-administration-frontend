@@ -20,6 +20,7 @@ export default class HeroComponent extends Component<HeroComponentProps> {
             <Box sx={{
                 position: 'relative',
                 color: 'white',
+                marginTop: '120px',
                 p: { xs: 2, sm: 4, md: 6 },
                 display: 'flex',
                 flexDirection: 'column',
