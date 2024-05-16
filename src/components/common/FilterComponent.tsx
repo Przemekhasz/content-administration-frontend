@@ -39,8 +39,8 @@ export class FilterComponent extends React.Component<FilterProps> {
                         <InputLabel>{config.label}</InputLabel>
                         <Select value={value || ''} onChange={this.handleChange} label={config.label}>
                             <MenuItem value="">{config.label}</MenuItem>
-                            <MenuItem value="true">Tak</MenuItem>
-                            <MenuItem value="false">Nie</MenuItem>
+                            <MenuItem value="true">Yes</MenuItem>
+                            <MenuItem value="false">No</MenuItem>
                         </Select>
                     </FormControl>
                 );

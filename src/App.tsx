@@ -16,7 +16,7 @@ interface PageViewerState {
 }
 
 export default class App extends Component<{}, PageViewerState> {
-    private pageDomain: PageDomain;
+    private readonly pageDomain: PageDomain;
     private pages: IPage[] | null;
 
     constructor(props: {}) {
