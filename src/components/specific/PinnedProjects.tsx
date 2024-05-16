@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import {Button, CircularProgress, Container, Typography} from '@mui/material';
+import { Button, CircularProgress, Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageDomain from "../../domain/Page/PageDomain";
 import IPage from "../../types/IPage";
 import IProject from "../../types/IProject";
-import {ProjectItem} from "./ProjectItem";
-import {Link} from "react-router-dom";
+import { ProjectItem } from "./ProjectItem";
+import { Link } from "react-router-dom";
 
 const theme = createTheme({
     typography: {
         fontFamily: 'Poppins, sans-serif',
+    },
+    palette: {
+        primary: {
+            main: '#011226',
+        },
     },
 });
 
@@ -48,28 +53,36 @@ export default class PinnedProjects extends Component<ProjectProps, ProjectState
         }
     }
 
-
     render() {
         const { isLoading, projects } = this.state;
         if (isLoading) {
-            return <CircularProgress />;
+            return (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                    <CircularProgress />
+                </Box>
+            );
         }
 
         return (
             <ThemeProvider theme={theme}>
                 <Container>
                     <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
-                        Przypięte Projekty
+                        Pinned Projects
                     </Typography>
                     {projects && projects.map((project, index) => (
                         <ProjectItem key={index} project={project} />
                     ))}
                     {projects && projects.length >= 1 && (
-                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                            <Button variant="contained" component={Link} to="/projects" sx={{ backgroundColor: '#011226', color: '#ffffff' }}>
-                                Zobacz wszystkie projekty
+                        <Box sx={{ textAlign: 'center', mt: 2 }}>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/projects"
+                                sx={{ backgroundColor: '#011226', color: '#ffffff' }}
+                            >
+                                See all projects
                             </Button>
-                        </div>
+                        </Box>
                     )}
                 </Container>
             </ThemeProvider>

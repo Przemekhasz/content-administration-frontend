@@ -6,24 +6,32 @@ import DOMPurify from "dompurify";
 
 const statusStyles = {
     inProgress: {
-        bgcolor: 'primary.main',
-        color: 'common.white',
+        color: '#000000',
         fontWeight: 'bold',
-        borderRadius: '4px',
-        padding: '4px 8px',
+        borderRadius: '8px',
+        padding: '4px 12px',
         display: 'inline-block',
-        border: '2px solid lightblue',
-        borderColor: 'primary.dark'
+        border: '2px solid',
+        borderColor: '#2196f3',
+        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+        transition: 'transform 0.2s ease-in-out',
+        '&:hover': {
+            transform: 'scale(1.05)',
+        }
     },
     done: {
-        bgcolor: 'success.main',
-        color: 'common.white',
+        color: '#000000',
         fontWeight: 'bold',
-        borderRadius: '4px',
-        padding: '4px 8px',
+        borderRadius: '8px',
+        padding: '4px 12px',
         display: 'inline-block',
-        border: '2px solid lightgreen',
-        borderColor: 'success.dark'
+        border: '2px solid',
+        borderColor: '#4caf50',
+        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+        transition: 'transform 0.2s ease-in-out',
+        '&:hover': {
+            transform: 'scale(1.05)',
+        }
     }
 };
 
@@ -33,24 +41,26 @@ interface ProjectItemProps {
 
 export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => (
     <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <ListItem alignItems="flex-start" sx={{ borderBottom: '1px solid #e0e0e0', pb: 2, mb: 2 }}>
+        <ListItem alignItems="flex-start" sx={{ borderBottom: '1px solid #e0e0e0', pb: 2, mb: 2, '&:hover': { backgroundColor: '#f5f5f5' } }}>
             <ListItemText
                 primary={
-                    <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <Typography variant="h5" gutterBottom>
-                            {project.title}
-                        </Typography>
-                    </Link>
-                }
-                secondary={
-                    <>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
+                            <Typography variant="h5" gutterBottom>
+                                {project.title}
+                            </Typography>
+                        </Link>
                         <Box component="span" sx={
                             project.status === 'inProgress' ?
                                 statusStyles['inProgress'] :
                                 statusStyles['done']
                         }>
-                            <b>Status:</b> {project.status === 'inProgress' ? 'W trakcie' : 'Zakończony'}
+                            {project.status === 'inProgress' ? 'IN PROGRESS' : 'DONE'}
                         </Box>
+                    </Box>
+                }
+                secondary={
+                    <>
                         <Typography
                             component="span"
                             variant="body2"
@@ -58,7 +68,7 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => (
                             sx={{ display: 'block', mt: 1 }}
                         >
                             {project.mainDescription && (
-                                <span dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(project.mainDescription || '')}}/>
+                                <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.mainDescription || '') }} />
                             )}
                         </Typography>
                         {project.categories?.map((category, catIndex) => (
@@ -72,4 +82,3 @@ export const ProjectItem: React.FC<ProjectItemProps> = ({ project }) => (
         </ListItem>
     </Link>
 );
-
