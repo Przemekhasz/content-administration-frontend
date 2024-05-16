@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Box, IconButton, Typography, Button } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
-import { Facebook, Twitter, LinkedIn, GitHub } from '@mui/icons-material';
+import { LinkedIn, GitHub } from '@mui/icons-material';
 import IPage from "../../types/IPage";
 import { apiUrl } from "../../env";
 import IPageHeader from "../../types/IPageHeader";

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Box, Typography, Grid, IconButton } from '@mui/material';
-import {Facebook, Twitter, Instagram, LinkedIn, YouTube, GitHub} from '@mui/icons-material';
+import { LinkedIn, GitHub} from '@mui/icons-material';
 import IFooter from "../../types/IFooter";
 import FooterDomain from "../../domain/Footer/FooterDomain";
 
