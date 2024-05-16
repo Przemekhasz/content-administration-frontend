@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography, Button } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
+import { Facebook, Twitter, LinkedIn, GitHub } from '@mui/icons-material';
 import IPage from "../../types/IPage";
 import { apiUrl } from "../../env";
 import IPageHeader from "../../types/IPageHeader";
@@ -19,12 +20,13 @@ export default class HeroComponent extends Component<HeroComponentProps> {
             <Box sx={{
                 position: 'relative',
                 color: 'white',
-                p: 6,
+                p: { xs: 2, sm: 4, md: 6 },
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 minHeight: '100vh',
+                textAlign: 'center',
                 '&::before': {
                     content: '""',
                     position: 'absolute',
@@ -36,10 +38,39 @@ export default class HeroComponent extends Component<HeroComponentProps> {
                     backgroundAttachment: 'fixed',
                     backgroundSize: 'cover',
                     zIndex: -1,
+                    filter: 'brightness(0.5)',
                 }
-            }}
-            >
-                <h1>{mainHeader ? mainHeader.name : ""}</h1>
+            }}>
+                <Box sx={{
+                    textAlign: 'center',
+                    maxWidth: { xs: '90%', sm: '80%', md: '70%', lg: '60%' },
+                }}>
+                    <Typography variant="h3" sx={{
+                        fontWeight: 'bold',
+                        fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+                    }}>
+                        {mainHeader ? mainHeader.name : ""}
+                    </Typography>
+                    <Typography variant="h6" sx={{ mt: 2 }}>
+                        Welcome to my portfolio website! Discover my projects and get in touch.
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 3, backgroundColor: '#011226' }}
+                        onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+                    >
+                        Learn More
+                    </Button>
+                    <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'center' }}>
+                        <IconButton href="https://www.linkedin.com/in/przemys%C5%82aw-tarapacki-6b175a229/" target="_blank" sx={{ color: 'white' }}>
+                            <LinkedIn fontSize="large" />
+                        </IconButton>
+                        <IconButton href="https://github.com/Przemekhasz" target="_blank" sx={{ color: 'white' }}>
+                            <GitHub fontSize="large" />
+                        </IconButton>
+                    </Box>
+                </Box>
                 <IconButton
                     onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
                     sx={{
