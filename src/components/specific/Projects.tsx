@@ -112,7 +112,7 @@ export default class Projects extends Component<ProjectProps, ProjectState> {
         return (
             <ThemeProvider theme={theme}>
                 <Container>
-                    <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
+                    <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
                         Projects
                     </Typography>
                     <FilterManager filters={filters} onFilterChange={this.handleFilterChange} />

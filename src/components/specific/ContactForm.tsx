@@ -180,7 +180,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
                     <form onSubmit={this.handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
+                                <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
                                     Contact
                                 </Typography>
                             </Grid>

@@ -45,7 +45,7 @@ export class BodyTextComponent extends React.Component<BodyTextProps, BodyTextCo
                     {this.state.bodyTexts.map((bt) => (
                         <Grid item xs={12} sm={6} md={12} key={bt.id}>
                             <Paper style={{ padding: 20 }}>
-                                <Typography variant="h5" component="h2">
+                                <Typography variant="h5" component="h2" color={'#ff5252'}>
                                     {bt.heading}
                                 </Typography>
 

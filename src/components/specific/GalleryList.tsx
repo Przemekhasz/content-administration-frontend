@@ -50,7 +50,7 @@ class GalleryList extends Component<GalleryListProps, GalleryListState> {
             <Container>
                 {galleries && galleries.length > 0 && (
                     <>
-                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
+                        <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
                             Galerie
                         </Typography>
                         <Grid container spacing={3}>
