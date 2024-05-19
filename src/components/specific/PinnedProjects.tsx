@@ -66,7 +66,7 @@ export default class PinnedProjects extends Component<ProjectProps, ProjectState
         return (
             <ThemeProvider theme={theme}>
                 <Container>
-                    <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#011226'}>
+                    <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
                         Pinned Projects
                     </Typography>
                     {projects && projects.map((project, index) => (

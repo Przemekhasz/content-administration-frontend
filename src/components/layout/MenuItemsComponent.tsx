@@ -30,6 +30,7 @@ const StyledLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
     '&:hover': {
         textDecoration: 'underline',
         backgroundColor: theme.palette.action.hover,
+        color: '#ff5252'
     },
 }));
 

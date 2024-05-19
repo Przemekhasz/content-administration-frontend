@@ -10,6 +10,7 @@ import { ContactForm } from "./ContactForm";
 import { BodyTextComponent } from "../layout/BodyTextComponent";
 import PrivatePageNotification from "../common/PrivatePageNotification";
 import PinnedProjects from "../specific/PinnedProjects";
+import {SkillsCard} from "./SkillsList";
 
 class PageViewer extends Component<{ page: IPage }> {
     private pageIdStorage(): void {
@@ -31,7 +32,10 @@ class PageViewer extends Component<{ page: IPage }> {
                         <HeroComponent page={page} />
                         <BodyTextComponent page={page} />
                         {page.showPinnedProjects ? (
-                            <PinnedProjects page={page} />
+                            <>
+                                <SkillsCard />
+                                <PinnedProjects page={page} />
+                            </>
                         ) : (
                             <Projects page={page} />
                         )}
