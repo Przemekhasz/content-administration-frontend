@@ -3,6 +3,7 @@ import { Box, Typography, Grid, IconButton } from '@mui/material';
 import { LinkedIn, GitHub} from '@mui/icons-material';
 import IFooter from "../../types/IFooter";
 import FooterDomain from "../../domain/Footer/FooterDomain";
+import './footer.css'
 
 interface FooterState {
     footer: IFooter;
@@ -55,7 +56,7 @@ class Footer extends Component<{}, FooterState> {
                     <Grid item xs={12} md={4} textAlign="center">
                         <Typography variant="h6">{this.state.footer.siteName}</Typography>
                         <Typography variant="body2">{this.state.footer.description}</Typography>
-                        <Typography variant="body2">Email: <a href={`mailto:${this.state.footer.email}`}>{this.state.footer.email}</a></Typography>
+                        <Typography variant="body2" >Email: <a href={`mailto:${this.state.footer.email}`}>{this.state.footer.email}</a></Typography>
                         <Typography variant="body2">Tel: <a href={`tel:${this.state.footer.phoneNumber}`}>{this.state.footer.phoneNumber}</a></Typography>
                     </Grid>
                     <Grid item xs={12} md={4} textAlign="center">
