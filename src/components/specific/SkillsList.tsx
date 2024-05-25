@@ -32,7 +32,7 @@ const categories = {
     "Backend Development": ["PHP", "Symfony", "Laravel", "PostgreSQL/MySQL", "MongoDB", "CQRS", "RabbitMQ", "Redis"],
     "DevOps": ["Bash", "CI/CD", "Kubernetes", "Docker", "Linux", "Elasticsearch", "Google Cloud"],
     "Frontend Development": ["JavaScript/TypeScript", "React"],
-    "Tools": ["Git", "Jira", "Slack", "Wireshark", "Nmap", "Java", "Office 365"]
+    "Tools": ["Git", "Jira", "Slack", "Wireshark", "Nmap", "Office 365"]
 };
 
 interface SkillsCardProps {
