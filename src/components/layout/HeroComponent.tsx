@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Box, IconButton, Typography, Button } from '@mui/material';
-import { KeyboardArrowDown } from '@mui/icons-material';
-import { LinkedIn, GitHub } from '@mui/icons-material';
+import { Box, Typography, Button, IconButton } from '@mui/material';
+import { KeyboardArrowDown, LinkedIn, GitHub } from '@mui/icons-material';
 import IPage from "../../types/IPage";
 import { apiUrl } from "../../env";
 import IPageHeader from "../../types/IPageHeader";
@@ -13,14 +12,13 @@ interface HeroComponentProps {
 export default class HeroComponent extends Component<HeroComponentProps> {
     render() {
         const { page } = this.props;
-
         const mainHeader: IPageHeader | undefined = page.pageHeaders?.find(header => header.main);
 
         return (
             <Box sx={{
                 position: 'relative',
                 color: 'white',
-                marginTop: '120px',
+                mt: '120px',
                 p: { xs: 2, sm: 4, md: 6 },
                 display: 'flex',
                 flexDirection: 'column',
@@ -46,9 +44,9 @@ export default class HeroComponent extends Component<HeroComponentProps> {
                     textAlign: 'center',
                     maxWidth: { xs: '90%', sm: '80%', md: '70%', lg: '60%' },
                 }}>
-                    <Typography variant="h3" sx={{
+                    <Typography variant="h1" sx={{
                         fontWeight: 'bold',
-                        fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+                        fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
                     }}>
                         {mainHeader ? mainHeader.name : ""}
                     </Typography>
@@ -58,7 +56,7 @@ export default class HeroComponent extends Component<HeroComponentProps> {
                     <Button
                         variant="contained"
                         color="primary"
-                        sx={{ mt: 3, backgroundColor: '#011226' }}
+                        sx={{ mt: 3, backgroundColor: '#ff5252' }}
                         onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
                     >
                         Learn More

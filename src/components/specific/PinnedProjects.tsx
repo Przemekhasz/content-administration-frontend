@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
-import { Button, CircularProgress, Container, Typography, Box } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CircularProgress, Container, Typography, Box, Button } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import PageDomain from "../../domain/Page/PageDomain";
 import IPage from "../../types/IPage";
 import IProject from "../../types/IProject";
 import { ProjectItem } from "./ProjectItem";
 import { Link } from "react-router-dom";
-
-const theme = createTheme({
-    typography: {
-        fontFamily: 'Poppins, sans-serif',
-    },
-    palette: {
-        primary: {
-            main: '#011226',
-        },
-    },
-});
+import theme from '../../theme';
 
 interface ProjectProps {
     page: IPage;

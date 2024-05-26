@@ -1,5 +1,5 @@
-import React from 'react';
-import {Container, Grid, Paper, Typography} from '@mui/material';
+import React, { Component } from 'react';
+import {Box, Container, Grid, Paper, Typography} from '@mui/material';
 import IBodyText from "../../types/IBodyText";
 import IPage from "../../types/IPage";
 import PageDomain from "../../domain/Page/PageDomain";
@@ -14,7 +14,7 @@ interface BodyTextComponentState {
     isLoading: boolean;
 }
 
-export class BodyTextComponent extends React.Component<BodyTextProps, BodyTextComponentState> {
+export class BodyTextComponent extends Component<BodyTextProps, BodyTextComponentState> {
     private pageDomain: PageDomain;
 
     constructor(props: BodyTextProps) {
@@ -40,19 +40,17 @@ export class BodyTextComponent extends React.Component<BodyTextProps, BodyTextCo
 
     render() {
         return (
-            <Container maxWidth="md">
-                <Grid container spacing={2} justifyContent="center" style={{ padding: 20 }}>
+            <Container maxWidth="md" sx={{ my: 4 }}>
+                <Grid container spacing={4}>
                     {this.state.bodyTexts.map((bt) => (
-                        <Grid item xs={12} sm={6} md={12} key={bt.id}>
-                            <Paper style={{ padding: 20 }}>
-                                <Typography variant="h5" component="h2" color={'#ff5252'}>
-                                    {bt.heading}
-                                </Typography>
-
-                                <Typography variant="body1" gutterBottom>
-                                    <Typography variant="body1" style={{ whiteSpace: 'pre-line' }}
-                                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(bt.body || '')}}/>
-                                </Typography>
+                        <Grid item xs={12} key={bt.id}>
+                            <Paper elevation={3}>
+                                <Box p={4}>
+                                    <Typography variant="h4" color="primary" gutterBottom>
+                                        {bt.heading}
+                                    </Typography>
+                                    <Typography variant="body1" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(bt.body || '') }} />
+                                </Box>
                             </Paper>
                         </Grid>
                     ))}

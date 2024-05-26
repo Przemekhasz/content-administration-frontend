@@ -5,7 +5,8 @@ import LoadingScreen from '../common/LoadingScreen';
 import PageDomain from "../../domain/Page/PageDomain";
 import IGallery from "../../types/IGallery";
 import IPage from "../../types/IPage";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import theme from '../../theme';
 
 interface GalleryListProps {
     page: IPage | null;
@@ -51,7 +52,7 @@ class GalleryList extends Component<GalleryListProps, GalleryListState> {
                 {galleries && galleries.length > 0 && (
                     <>
                         <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
-                            Galerie
+                            Galleries
                         </Typography>
                         <Grid container spacing={3}>
                             {galleries.map((gallery, index) => (

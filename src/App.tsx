@@ -1,12 +1,15 @@
 import React, { Component, Suspense, lazy } from 'react';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import LoadingScreen from "./components/common/LoadingScreen";
 import IPage from "./types/IPage";
 import PageDomain from "./domain/Page/PageDomain";
 import { PageNotFound } from './components/common/PageNotFound';
 import { ProjectDetail } from './components/specific/ProjectDetail';
+import { GalleryImages } from "./components/specific/GalleryImages";
+import theme from './theme';
 import "./App.css";
-import {GalleryImages} from "./components/specific/GalleryImages";
 
 const PageViewer = lazy(() => import("./components/specific/PageViewer"));
 
@@ -50,7 +53,8 @@ export default class App extends Component<{}, PageViewerState> {
         if (isLoading) return <LoadingScreen />;
 
         return (
-            <>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <Suspense fallback={<LoadingScreen />}>
                     <Routes>
                         {this.pages?.map(page => (
@@ -65,7 +69,7 @@ export default class App extends Component<{}, PageViewerState> {
                         <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </Suspense>
-            </>
+            </ThemeProvider>
         );
     }
 }
