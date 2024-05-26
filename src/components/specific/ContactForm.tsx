@@ -1,6 +1,6 @@
 import React, { Component, ChangeEvent, FormEvent } from 'react';
 import { TextField, Button, Grid, Typography, Container, Snackbar, Alert } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import IContact from "../../types/IContact";
 import ContactDomain from "../../domain/Contact/ContactDomain";
 import theme from '../../theme';
