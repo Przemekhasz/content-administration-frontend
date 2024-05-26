@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LoadingScreen from "../common/LoadingScreen";
 import IMenuItem from "../../types/IMenuItem";
 import MenuItemsDomain from "../../domain/MenuItems/MenuItemsDomain";
-import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import theme from '../../theme';
 
 const MenuItemsComponent = () => {
