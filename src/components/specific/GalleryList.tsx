@@ -6,7 +6,6 @@ import PageDomain from "../../domain/Page/PageDomain";
 import IGallery from "../../types/IGallery";
 import IPage from "../../types/IPage";
 import { Link } from "react-router-dom";
-import theme from '../../theme';
 
 interface GalleryListProps {
     page: IPage | null;
