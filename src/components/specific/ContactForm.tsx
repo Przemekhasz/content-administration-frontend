@@ -3,44 +3,7 @@ import { TextField, Button, Grid, Typography, Container, Snackbar, Alert } from 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IContact from "../../types/IContact";
 import ContactDomain from "../../domain/Contact/ContactDomain";
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#011226',
-        },
-    },
-    typography: {
-        fontFamily: 'Arial, sans-serif',
-    },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    padding: '10px 20px',
-                    fontSize: '1rem',
-                }
-            }
-        },
-        MuiTextField: {
-            styleOverrides: {
-                root: {
-                    '& label.Mui-focused': {
-                        color: '#011226',
-                    },
-                    '& .MuiInput-underline:after': {
-                        borderBottomColor: '#011226',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '&.Mui-focused fieldset': {
-                            borderColor: '#011226',
-                        },
-                    },
-                }
-            }
-        }
-    }
-});
+import theme from '../../theme';
 
 interface ContactFormState {
     formData: IContact;
@@ -121,7 +84,6 @@ export class ContactForm extends Component<{}, ContactFormState> {
         }
     }
 
-
     private validateForm(formData: IContact) {
         const errors = {
             email: '',
@@ -144,7 +106,7 @@ export class ContactForm extends Component<{}, ContactFormState> {
         if (!formData.content) {
             errors.content = 'Content is required';
         } else if (formData.content.length > 255) {
-            errors.content = 'Content cannot exceed 255 characters';
+            errors.content = 'cannot exceed 255 characters';
         }
 
         return errors;
