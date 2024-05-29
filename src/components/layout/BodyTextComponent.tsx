@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Box, Container, Grid, Paper, Typography} from '@mui/material';
+import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import IBodyText from "../../types/IBodyText";
 import IPage from "../../types/IPage";
 import PageDomain from "../../domain/Page/PageDomain";
 import DOMPurify from "dompurify";
+import { motion } from 'framer-motion';
 
 type BodyTextProps = {
     page: IPage;
@@ -42,16 +43,18 @@ export class BodyTextComponent extends Component<BodyTextProps, BodyTextComponen
         return (
             <Container maxWidth="md" sx={{ my: 4 }}>
                 <Grid container spacing={4}>
-                    {this.state.bodyTexts.map((bt) => (
+                    {this.state.bodyTexts.map((bt, index) => (
                         <Grid item xs={12} key={bt.id}>
-                            <Paper elevation={3}>
-                                <Box p={4}>
-                                    <Typography variant="h4" color="primary" gutterBottom>
-                                        {bt.heading}
-                                    </Typography>
-                                    <Typography variant="body1" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(bt.body || '') }} />
-                                </Box>
-                            </Paper>
+                            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.2 }}>
+                                <Paper elevation={3}>
+                                    <Box p={4}>
+                                        <Typography variant="h4" color="primary" gutterBottom>
+                                            {bt.heading}
+                                        </Typography>
+                                        <Typography variant="body1" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(bt.body || '') }} />
+                                    </Box>
+                                </Paper>
+                            </motion.div>
                         </Grid>
                     ))}
                 </Grid>

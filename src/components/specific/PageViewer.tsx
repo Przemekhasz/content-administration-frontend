@@ -6,11 +6,11 @@ import Projects from "./Projects";
 import GalleryList from "./GalleryList";
 import MenuItemsComponent from "../layout/MenuItemsComponent";
 import Footer from "../layout/Footer";
-import { ContactForm } from "./ContactForm";
 import { BodyTextComponent } from "../layout/BodyTextComponent";
 import PrivatePageNotification from "../common/PrivatePageNotification";
 import PinnedProjects from "../specific/PinnedProjects";
-import {SkillsCard} from "./SkillsList";
+import { SkillsCard } from "./SkillsList";
+import ContactForm from "./ContactForm";
 
 class PageViewer extends Component<{ page: IPage }> {
     private pageIdStorage(): void {

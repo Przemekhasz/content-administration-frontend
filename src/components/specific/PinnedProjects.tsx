@@ -7,6 +7,7 @@ import IProject from "../../types/IProject";
 import { ProjectItem } from "./ProjectItem";
 import { Link } from "react-router-dom";
 import theme from '../../theme';
+import { motion } from 'framer-motion';
 
 interface ProjectProps {
     page: IPage;
@@ -60,7 +61,9 @@ export default class PinnedProjects extends Component<ProjectProps, ProjectState
                         Pinned Projects
                     </Typography>
                     {projects && projects.map((project, index) => (
-                        <ProjectItem key={index} project={project} />
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: index * 0.2 }}>
+                            <ProjectItem key={index} project={project} />
+                        </motion.div>
                     ))}
                     {projects && projects.length >= 1 && (
                         <Box sx={{ textAlign: 'center', mt: 2 }}>
