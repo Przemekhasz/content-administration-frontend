@@ -1,9 +1,10 @@
-import React, { Component, ChangeEvent, FormEvent } from 'react';
-import { TextField, Button, Grid, Typography, Container, Snackbar, Alert } from '@mui/material';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { TextField, Button, Grid, Typography, Container, Snackbar, Alert, Tooltip } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import IContact from "../../types/IContact";
 import ContactDomain from "../../domain/Contact/ContactDomain";
 import theme from '../../theme';
+import { motion } from 'framer-motion';
 
 interface ContactFormState {
     formData: IContact;
@@ -17,34 +18,29 @@ interface ContactFormState {
     snackbarSeverity: 'success' | 'error';
 }
 
-export class ContactForm extends Component<{}, ContactFormState> {
-    private readonly contactDomain: ContactDomain;
+const ContactForm: React.FC = () => {
+    const [state, setState] = useState<ContactFormState>({
+        formData: {
+            email: '',
+            topic: '',
+            content: '',
+        },
+        errors: {
+            email: '',
+            topic: '',
+            content: '',
+        },
+        snackbarOpen: false,
+        snackbarMessage: '',
+        snackbarSeverity: 'success'
+    });
 
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            formData: {
-                email: '',
-                topic: '',
-                content: '',
-            },
-            errors: {
-                email: '',
-                topic: '',
-                content: '',
-            },
-            snackbarOpen: false,
-            snackbarMessage: '',
-            snackbarSeverity: 'success'
-        };
-        this.contactDomain = new ContactDomain();
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    const contactDomain = new ContactDomain();
 
-    private handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = event.target;
-        this.setState(prevState => ({
+        setState(prevState => ({
+            ...prevState,
             formData: {
                 ...prevState.formData,
                 [name]: value
@@ -56,35 +52,37 @@ export class ContactForm extends Component<{}, ContactFormState> {
         }));
     }
 
-    private async handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-        const { formData } = this.state;
-        const errors = this.validateForm(formData);
+        const { formData } = state;
+        const errors = validateForm(formData);
 
         if (Object.values(errors).some(error => error !== '')) {
-            this.setState({ errors });
+            setState(prevState => ({ ...prevState, errors }));
             return;
         }
 
         try {
-            await this.contactDomain.postContact(formData);
-            this.clearForm();
-            this.setState({
+            await contactDomain.postContact(formData);
+            clearForm();
+            setState(prevState => ({
+                ...prevState,
                 snackbarOpen: true,
                 snackbarMessage: 'Form submission successful!',
                 snackbarSeverity: 'success'
-            });
+            }));
         } catch (error) {
             console.error('Error occurred while submitting form:', error);
-            this.setState({
+            setState(prevState => ({
+                ...prevState,
                 snackbarOpen: true,
                 snackbarMessage: 'Failed to submit form.',
                 snackbarSeverity: 'error'
-            });
+            }));
         }
     }
 
-    private validateForm(formData: IContact) {
+    const validateForm = (formData: IContact) => {
         const errors = {
             email: '',
             topic: '',
@@ -106,14 +104,14 @@ export class ContactForm extends Component<{}, ContactFormState> {
         if (!formData.content) {
             errors.content = 'Content is required';
         } else if (formData.content.length > 255) {
-            errors.content = 'cannot exceed 255 characters';
+            errors.content = 'Content cannot exceed 255 characters';
         }
 
         return errors;
     }
 
-    private clearForm(): void {
-        this.setState({
+    const clearForm = (): void => {
+        setState({
             formData: {
                 email: '',
                 topic: '',
@@ -123,54 +121,64 @@ export class ContactForm extends Component<{}, ContactFormState> {
                 email: '',
                 topic: '',
                 content: '',
-            }
+            },
+            snackbarOpen: false,
+            snackbarMessage: '',
+            snackbarSeverity: 'success'
         });
     }
 
-    private handleCloseSnackbar = () => {
-        this.setState({
-            snackbarOpen: false
-        });
+    const handleCloseSnackbar = () => {
+        setState(prevState => ({ ...prevState, snackbarOpen: false }));
     };
 
-    render() {
-        const { formData, errors, snackbarOpen, snackbarMessage, snackbarSeverity } = this.state;
+    const { formData, errors, snackbarOpen, snackbarMessage, snackbarSeverity } = state;
 
-        return (
-            <ThemeProvider theme={theme}>
-                <Container>
-                    <form onSubmit={this.handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
-                                    Contact
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
+    return (
+        <ThemeProvider theme={theme}>
+            <Container>
+                <motion.form
+                    onSubmit={handleSubmit}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Typography variant="h4" align="center" gutterBottom sx={{ mt: 3, mb: 2 }} color={'#ff5252'}>
+                                Contact
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Tooltip title="Enter your email" arrow>
                                 <TextField
                                     fullWidth
                                     name="email"
                                     label="Email"
                                     variant="outlined"
                                     value={formData.email}
-                                    onChange={this.handleChange}
+                                    onChange={handleChange}
                                     error={!!errors.email}
                                     helperText={errors.email}
                                 />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
+                            </Tooltip>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Tooltip title="Enter the topic" arrow>
                                 <TextField
                                     fullWidth
                                     name="topic"
                                     label="Topic"
                                     variant="outlined"
                                     value={formData.topic}
-                                    onChange={this.handleChange}
+                                    onChange={handleChange}
                                     error={!!errors.topic}
                                     helperText={errors.topic}
                                 />
-                            </Grid>
-                            <Grid item xs={12}>
+                            </Tooltip>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Tooltip title="Enter your message content" arrow>
                                 <TextField
                                     fullWidth
                                     name="content"
@@ -179,25 +187,27 @@ export class ContactForm extends Component<{}, ContactFormState> {
                                     multiline
                                     rows={4}
                                     value={formData.content}
-                                    onChange={this.handleChange}
+                                    onChange={handleChange}
                                     error={!!errors.content}
                                     helperText={errors.content}
                                 />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, fontSize: '1.1rem' }}>
-                                    Submit
-                                </Button>
-                            </Grid>
+                            </Tooltip>
                         </Grid>
-                    </form>
-                    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={this.handleCloseSnackbar}>
-                        <Alert onClose={this.handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
-                            {snackbarMessage}
-                        </Alert>
-                    </Snackbar>
-                </Container>
-            </ThemeProvider>
-        );
-    }
+                        <Grid item xs={12}>
+                            <Button type="submit" variant="contained" color="primary" sx={{ mt: 2, fontSize: '1.1rem' }}>
+                                Submit
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </motion.form>
+                <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
+            </Container>
+        </ThemeProvider>
+    );
 }
+
+export default ContactForm;
